@@ -12,7 +12,7 @@ model User {
   id                 String    @id @default(uuid())
   name               String
   email              String    @unique
-  password           String
+  password           String?
   profilePicture     String?
   isActive           Boolean   @default(false)
   lastLogin          DateTime?
@@ -97,7 +97,7 @@ model Task {
 
 model Role {
   id          String           @id @default(uuid())
-  role        RoleType         @default(MEMBER)
+  role        RoleType        @unique 
   permissions RolePermission[]
 
   createdAt DateTime @default(now())

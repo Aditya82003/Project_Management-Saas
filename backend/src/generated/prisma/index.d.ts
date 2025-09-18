@@ -1934,7 +1934,7 @@ export namespace Prisma {
     id: string
     name: string
     email: string
-    password: string
+    password: string | null
     profilePicture: string | null
     isActive: boolean
     lastLogin: Date | null
@@ -2052,7 +2052,7 @@ export namespace Prisma {
       id: string
       name: string
       email: string
-      password: string
+      password: string | null
       profilePicture: string | null
       isActive: boolean
       lastLogin: Date | null
@@ -11145,7 +11145,7 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     profilePicture?: StringNullableFilter<"User"> | string | null
     isActive?: BoolFilter<"User"> | boolean
     lastLogin?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -11164,7 +11164,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     profilePicture?: SortOrderInput | SortOrder
     isActive?: SortOrder
     lastLogin?: SortOrderInput | SortOrder
@@ -11186,7 +11186,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     profilePicture?: StringNullableFilter<"User"> | string | null
     isActive?: BoolFilter<"User"> | boolean
     lastLogin?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -11205,7 +11205,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     profilePicture?: SortOrderInput | SortOrder
     isActive?: SortOrder
     lastLogin?: SortOrderInput | SortOrder
@@ -11224,7 +11224,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
-    password?: StringWithAggregatesFilter<"User"> | string
+    password?: StringNullableWithAggregatesFilter<"User"> | string | null
     profilePicture?: StringNullableWithAggregatesFilter<"User"> | string | null
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
     lastLogin?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -11563,15 +11563,15 @@ export namespace Prisma {
 
   export type RoleWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    role?: $Enums.RoleType
     AND?: RoleWhereInput | RoleWhereInput[]
     OR?: RoleWhereInput[]
     NOT?: RoleWhereInput | RoleWhereInput[]
-    role?: EnumRoleTypeFilter<"Role"> | $Enums.RoleType
     createdAt?: DateTimeFilter<"Role"> | Date | string
     updatedAt?: DateTimeFilter<"Role"> | Date | string
     permissions?: RolePermissionListRelationFilter
     Member?: MemberListRelationFilter
-  }, "id">
+  }, "id" | "role">
 
   export type RoleOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11713,7 +11713,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -11731,7 +11731,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -11749,7 +11749,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11767,7 +11767,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11785,7 +11785,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -11798,7 +11798,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11810,7 +11810,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12137,7 +12137,7 @@ export namespace Prisma {
 
   export type RoleCreateInput = {
     id?: string
-    role?: $Enums.RoleType
+    role: $Enums.RoleType
     createdAt?: Date | string
     updatedAt?: Date | string
     permissions?: RolePermissionCreateNestedManyWithoutRoleInput
@@ -12146,7 +12146,7 @@ export namespace Prisma {
 
   export type RoleUncheckedCreateInput = {
     id?: string
-    role?: $Enums.RoleType
+    role: $Enums.RoleType
     createdAt?: Date | string
     updatedAt?: Date | string
     permissions?: RolePermissionUncheckedCreateNestedManyWithoutRoleInput
@@ -12173,7 +12173,7 @@ export namespace Prisma {
 
   export type RoleCreateManyInput = {
     id?: string
-    role?: $Enums.RoleType
+    role: $Enums.RoleType
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14251,7 +14251,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14268,7 +14268,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14342,7 +14342,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14359,7 +14359,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14397,7 +14397,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14414,7 +14414,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14494,7 +14494,7 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     profilePicture?: StringNullableFilter<"User"> | string | null
     isActive?: BoolFilter<"User"> | boolean
     lastLogin?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -14507,7 +14507,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14524,7 +14524,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14573,7 +14573,7 @@ export namespace Prisma {
 
   export type RoleCreateWithoutMemberInput = {
     id?: string
-    role?: $Enums.RoleType
+    role: $Enums.RoleType
     createdAt?: Date | string
     updatedAt?: Date | string
     permissions?: RolePermissionCreateNestedManyWithoutRoleInput
@@ -14581,7 +14581,7 @@ export namespace Prisma {
 
   export type RoleUncheckedCreateWithoutMemberInput = {
     id?: string
-    role?: $Enums.RoleType
+    role: $Enums.RoleType
     createdAt?: Date | string
     updatedAt?: Date | string
     permissions?: RolePermissionUncheckedCreateNestedManyWithoutRoleInput
@@ -14607,7 +14607,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14624,7 +14624,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14848,7 +14848,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14865,7 +14865,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14887,7 +14887,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14904,7 +14904,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -14966,7 +14966,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14983,7 +14983,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15011,7 +15011,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15028,7 +15028,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15128,7 +15128,7 @@ export namespace Prisma {
 
   export type RoleCreateWithoutPermissionsInput = {
     id?: string
-    role?: $Enums.RoleType
+    role: $Enums.RoleType
     createdAt?: Date | string
     updatedAt?: Date | string
     Member?: MemberCreateNestedManyWithoutRoleInput
@@ -15136,7 +15136,7 @@ export namespace Prisma {
 
   export type RoleUncheckedCreateWithoutPermissionsInput = {
     id?: string
-    role?: $Enums.RoleType
+    role: $Enums.RoleType
     createdAt?: Date | string
     updatedAt?: Date | string
     Member?: MemberUncheckedCreateNestedManyWithoutRoleInput
@@ -15178,7 +15178,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -15195,7 +15195,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -15228,7 +15228,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15245,7 +15245,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15515,7 +15515,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     profilePicture?: string | null
     isActive?: boolean
     lastLogin?: Date | string | null
@@ -15574,7 +15574,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15591,7 +15591,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15608,7 +15608,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
