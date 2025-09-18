@@ -1,15 +1,22 @@
 import { NextFunction, Request, Response } from "express";
+import { HTTPSTATUS } from "../config/https.config";
+import { AppError, NotFoundException } from "../utilities/appError";
 
-export interface ApiError extends Error {
-  statusCode?: number;
-}
+export const errorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
+  console.log(`Error Occured on PATH ${req.path}`, error)
 
-export const errorHandler=(err:ApiError,req:Request,res:Response,next:NextFunction)=>{
-    console.log("<------------------Error---------->")
-    const statusCode = err.statusCode || 500
-    res.status(statusCode).json({
-        success:false,
-        message:err.message||"Server Error" ,
-        stack: process.env.MODE_ENV ==="production"? undefined :err.stack
+  if (error instanceof SyntaxError) {
+    return res.status(HTTPSTATUS.BAD_REQUEST).json({
+      message: "Invalid JSON",
     })
+  }
+  if(error instanceof AppError){
+    return res.status(error.statusCode).json({
+      message:error.message,
+    })
+  }
+
+  res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
+    message: error.message || "Internal Server Error",
+  })
 }
