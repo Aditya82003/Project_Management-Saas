@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String    @id @default(uuid())
+  name               String
+  email              String    @unique
+  password           String
+  profilePicture     String?
+  isActive           Boolean   @default(false)
+  lastLogin          DateTime?
+  currentWorkspaceId String?
+
+  membership       Member[]
+  assignedtasks    Task[]            @relation("AssignedTasks")
+  createdtasks     Task[]            @relation("CreatedTasks")
+  accountProvider  AccountProvider[]
+  currentWorkspace Workspace?        @relation("CurrentWorkspace", fields: [currentWorkspaceId], references: [id])
+  ownedWorkspaces  Workspace[]       @relation("OwnerRelation")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Workspace {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  inviteCode  String
+  ownerId     String
+
+  owner    User      @relation("OwnerRelation", fields: [ownerId], references: [id])
+  members  Member[]
+  projects Project[]
+
+  userWithCurrentWorkspace User[] @relation("CurrentWorkspace")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Member {
+  id String @id @default(uuid())
+
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+  role        Role      @relation(fields: [roleId], references: [id])
+  roleId      String
+
+  joinedAt DateTime @default(now())
+
+  @@unique([userId, workspaceId])
+}
+
+model Project {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+  tasks       Task[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Task {
+  id           String       @id @default(uuid())
+  taskCode     String
+  title        String
+  description  String?
+  project      Project      @relation(fields: [projectId], references: [id])
+  projectId    String
+  status       TaskStatus   @default(TODO)
+  priority     TaskPriority @default(LOW)
+  assignedTo   User?        @relation("AssignedTasks", fields: [assignedToId], references: [id])
+  assignedToId String?
+  createdBy    User         @relation("CreatedTasks", fields: [createdById], references: [id])
+  createdById  String
+  dueDate      DateTime
+  paid         Boolean?     @default(false)
+  credit       Int?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Role {
+  id          String           @id @default(uuid())
+  role        RoleType         @default(MEMBER)
+  permissions RolePermission[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Member Member[]
+}
+
+model RolePermission {
+  id         String         @id @default(uuid())
+  role       Role           @relation(fields: [roleId], references: [id])
+  roleId     String
+  permission PermissionType
+
+  @@unique([roleId, permission])
+}
+
+model AccountProvider {
+  id String @id @default(uuid())
+
+  provider   Provider
+  providerId String   @unique
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  refreshToken String?
+  tokenExpire  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum TaskStatus {
+  BACKLOG
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum RoleType {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum PermissionType {
+  CREATE_WORKSPACE
+  DELETE_WORKSPACE
+  EDIT_WORKSPACE
+  MANAGE_WORKSPACE_SETTINGS
+
+  ADD_MEMBER
+  CHANGE_MEMBER_ROLE
+  REMOVE_MEMBER
+
+  CREATE_PROJECT
+  EDIT_PROJECT
+  DELETE_PROJECT
+
+  CREATE_TASK
+  EDIT_TASK
+  DELETE_TASK
+
+  VIEW_ONLY
+}
+
+enum Provider {
+  GOOGLE
+  GITHUB
+  FACEBOOK
+  EMAIL
+}
