@@ -19,7 +19,7 @@ export class AppError extends Error{
 
 export class HttpException extends AppError{
     constructor(
-        message:"http exception eerror",
+        message="http exception eerror",
         statusCode:HttpStatusCodeType,
         errorCode?:ErrorCodeEnumType
     ){
@@ -29,7 +29,7 @@ export class HttpException extends AppError{
 
 export class InternalServerException extends AppError{
     constructor(
-        message:"internal server error",
+        message="internal server error",
         errorCode?:ErrorCodeEnumType
     ){
         super(message, HTTPSTATUS.INTERNAL_SERVER_ERROR, errorCode || ErrorCodeEnum.INTERNAL_SERVER_ERROR)
@@ -38,7 +38,7 @@ export class InternalServerException extends AppError{
 
 export class NotFoundException extends AppError{
     constructor(
-        message:"Resource not found",
+        message="Resource not found",
         errorCode?:ErrorCodeEnumType
     ){
         super(message, HTTPSTATUS.NOT_FOUND, errorCode || ErrorCodeEnum.RESOURCE_NOT_FOUND)
@@ -47,7 +47,7 @@ export class NotFoundException extends AppError{
 
 export class BadRequestException extends AppError{
     constructor(
-        message:"Bad request",
+        message="Bad request",
         errorCode?:ErrorCodeEnumType
     ){
         super(message, HTTPSTATUS.BAD_REQUEST, errorCode || ErrorCodeEnum.VALIDATION_ERROR)
@@ -56,7 +56,7 @@ export class BadRequestException extends AppError{
 
 export class UnauthorizedException extends AppError{
     constructor(
-        message:"Unauthorized",
+        message="Unauthorized",
         errorCode?:ErrorCodeEnumType
     ){
         super(message, HTTPSTATUS.UNAUTHORIZED, errorCode || ErrorCodeEnum.ACCESS_UNAUTHORIZED)

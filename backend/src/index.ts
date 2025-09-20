@@ -2,16 +2,17 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import express, { Request, Response, urlencoded } from 'express'
-import { asyncHandler } from './middleware/asyncHandler.middleware'
-import { errorHandler } from './middleware/errorHandler.middleware'
-import { config } from './config/app.config'
-import session from 'cookie-session'
 import cors from 'cors'
+// import session from 'cookie-session'
+import session from 'express-session'
+import { config } from './config/app.config'
+import { errorHandler } from './middleware/errorHandler.middleware'
 import { HTTPSTATUS } from './config/https.config'
+import { asyncHandler } from './middleware/asyncHandler.middleware'
 import authRoute from './routes/auth.routes'
 import { BadRequestException } from './utilities/appError'
 import passport from 'passport'
-import "./config/passport"
+import "./config/passport.config"
 
 const app =express()
 
@@ -23,14 +24,28 @@ app.use(express.json())
 app.use(urlencoded({extended:true}))
 
 //session for passport
-app.use(session({
-    name:"session",
-    keys:[config.SESSION_SECRET],
-    maxAge:24*60*60*100,
-    secure:config.MODE_ENV==="PRODUCTION",
-    httpOnly:true,
-    sameSite:false 
-}))
+// app.use(session({
+//     name:"session",
+//     keys:[config.SESSION_SECRET],
+//     maxAge:24*60*60*100,
+//     secure:config.MODE_ENV==="PRODUCTION",
+//     httpOnly:true,
+//     sameSite:"lax" 
+// }))
+app.use(
+  session({
+    name: "session",
+    secret: config.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      secure: config.MODE_ENV === "PRODUCTION", // true in prod with HTTPS
+      httpOnly: true,
+      sameSite: "lax",
+    },
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
