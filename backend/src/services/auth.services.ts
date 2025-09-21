@@ -1,91 +1,155 @@
 import { ProviderEnumType } from "../enums/account-provider.enum";
 import { Provider, RoleType } from "../generated/prisma";
 import prisma from "../prisma/cilent.prisma";
-import { NotFoundException } from "../utilities/appError";
+import { BadRequestException, NotFoundException } from "../utilities/appError";
 import { comparedPassword } from "../utilities/comparePassword";
-// import { generateInviteCode } from "../utilities/uuid";
+import bcrypt from "bcrypt"
+import { generateInviteCode } from "../utilities/generateInviteCode";
+export const loginOrCreateAccouunt = async (data: {
+    provider: Provider,
+    displayName: string,
+    providerId: string,
+    picture?: string,
+    email?: string
+}) => {
+    const { provider, providerId, displayName, picture, email } = data
 
-export const loginOrCreateAccouunt=async(data:{
-    provider:Provider,
-    displayName:string,
-    providerId:string,
-    picture?:string,
-    email?:string
-})=>{
-    const {provider,providerId,displayName,picture,email}=data
-
-    return await prisma.$transaction(async (ts)=>{
-        let user =await prisma.user.findUnique({
-            where:{email}
+    return await prisma.$transaction(async (ts) => {
+        let user = await prisma.user.findUnique({
+            where: { email }
         })
-        if(!user){
-            user=await ts.user.create({
-                data:{
-                    name:displayName,
-                    email:email as string,
-                    profilePicture:picture,
+        if (!user) {
+            user = await ts.user.create({
+                data: {
+                    name: displayName,
+                    email: email as string,
+                    profilePicture: picture,
                 }
             })
             await ts.accountProvider.create({
-                data:{
+                data: {
                     provider,
                     providerId,
-                    userId:user.id
+                    userId: user.id
                 }
             })
-            const workspace=await ts.workspace.create({
-                data:{
-                    name:"My workspace",
-                    description:`Workspace created for ${user.name}`,
-                    ownerId:user.id,
-                    inviteCode:""
+            const workspace = await ts.workspace.create({
+                data: {
+                    name: "My workspace",
+                    description: `Workspace created for ${user.name}`,
+                    ownerId: user.id,
+                    inviteCode: generateInviteCode()
                 }
             })
-            const ownerRole=await ts.role.findUnique({
-                where:{role:RoleType.OWNER}
+            const ownerRole = await ts.role.findUnique({
+                where: { role: RoleType.OWNER }
             })
-            if(!ownerRole){
+            if (!ownerRole) {
                 throw new Error("Owner role not found")
             }
-            const member=await ts.member.create({
-                data:{
-                    userId:user.id,
-                    workspaceId:workspace.id,
-                    roleId:ownerRole.id,
-                    joinedAt:new Date()
+            const member = await ts.member.create({
+                data: {
+                    userId: user.id,
+                    workspaceId: workspace.id,
+                    roleId: ownerRole.id,
+                    joinedAt: new Date()
                 }
             })
-            user=await ts.user.update({
-                where:{id:user.id},
-                data:{currentWorkspaceId:workspace.id}     
+            user = await ts.user.update({
+                where: { id: user.id },
+                data: { currentWorkspaceId: workspace.id }
             })
         }
 
-        return {user}
+        return { user }
     })
 }
 
-export const verifyUserService= async({email,password,provider=Provider.EMAIL}:{email:string,password:string,provider?:Provider})=>{
-    const account=await prisma.accountProvider.findFirst({
-        where:{
-            provider:provider,
-            providerId:email}
+export const verifyUserService = async ({ email, password, provider = Provider.EMAIL }: { email: string, password: string, provider?: Provider }) => {
+    const account = await prisma.accountProvider.findFirst({
+        where: {
+            provider: provider,
+            providerId: email
+        }
     })
-    if(!account){
+    if (!account) {
         throw new NotFoundException("Invalid email or password")
     }
     const user = await prisma.user.findUnique({
-        where:{
-            id:account.userId
+        where: {
+            id: account.userId
         }
     })
-    if(!user){
+    if (!user) {
         throw new NotFoundException("User not found for the given account")
     }
-    const isMatched=await comparedPassword(password,user.password as string)
-    if(!isMatched){
+    const isMatched = await comparedPassword(password, user.password as string)
+    if (!isMatched) {
         throw new NotFoundException("Invalid email or password")
     }
-    const {password:_,...rest}=user
+    const { password: _, ...rest } = user
     return rest
+}
+
+export const registerUserService = async (body: {
+    email: string,
+    name: string,
+    password: string
+}) => {
+    const { email, name, password } = body
+
+    return await prisma.$transaction(async (ts) => {
+        const existingUser = await ts.user.findUnique({
+            where:{email}
+        })
+        if(!existingUser){
+            throw new BadRequestException("User already exists")
+        }
+        const hashedPassword = await bcrypt.hash(password,10)
+
+        let user=await ts.user.create({
+            data:{
+                email,
+                name,
+                password:hashedPassword
+            }
+        })
+        await ts.accountProvider.create({
+            data:{
+                provider:Provider.EMAIL,
+                providerId:email,
+                userId:user.id
+            }
+        })
+        const workspace=await ts.workspace.create({
+            data:{
+                name:"My workspace",
+                description:`Workspace created for ${user.name}`,
+                ownerId:user.id,
+                inviteCode:generateInviteCode()
+            }
+        })
+        const ownerRole=await ts.role.findFirst({
+            where:{
+                role:RoleType.OWNER
+            }
+        })
+        if(!ownerRole){
+            throw new NotFoundException("Owner role not found")
+        }   
+        const member=await ts.member.create({
+            data:{
+                userId:user.id,
+                workspaceId:workspace.id,
+                roleId:ownerRole.id,
+                joinedAt:new Date()
+            }
+        }) 
+        user=await ts.user.update({
+            where:{id:user.id},
+            data:{currentWorkspaceId:workspace.id}
+        })
+
+     })
+
 }
