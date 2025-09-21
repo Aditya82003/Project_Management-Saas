@@ -10,9 +10,12 @@ import { errorHandler } from './middleware/errorHandler.middleware'
 import { HTTPSTATUS } from './config/https.config'
 import { asyncHandler } from './middleware/asyncHandler.middleware'
 import authRoute from './routes/auth.routes'
+import userRoute from './routes/user.routes'
+import workspaceRoute from './routes/workspace.routes'
 import { BadRequestException } from './utilities/appError'
 import passport from 'passport'
 import "./config/passport.config"
+import isAuthenticated from './middleware/isAuthenticate.middleware'
 
 const app =express()
 
@@ -65,6 +68,8 @@ app.get('/',asyncHandler(async(req:Request,res:Response)=>{
 }))
 
 app.use(`${BASE_PATH}/auth`,authRoute)
+app.use(`${BASE_PATH}/users`,isAuthenticated,userRoute)
+app.use(`${BASE_PATH}/workspace`,isAuthenticated,workspaceRoute)
 
 //global middleware
 app.use(errorHandler)

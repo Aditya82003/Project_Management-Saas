@@ -1,6 +1,6 @@
 import express from 'express'
 import passport from 'passport'
-import { googleLoginCallback, registerUserController } from '../controllers/auth.controller'
+import { googleLoginCallback, loginController, logOutController, registerUserController } from '../controllers/auth.controller'
 import { config } from '../config/app.config'
 
 const router = express.Router()
@@ -8,6 +8,8 @@ const router = express.Router()
 const failedUrl =`${config.FRONTEND_GOOGLE_CALLBACK_URL}/?status=failure`
 
 router.post('/register',registerUserController)
+router.post('/login',loginController)
+router.post('/logout',logOutController)
 
 router.get('/google',passport.authenticate('google',{scope:["profile","email"]}))
 

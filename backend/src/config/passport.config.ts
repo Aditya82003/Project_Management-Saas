@@ -17,7 +17,7 @@ passport.use(new GoogleStrategy({
     scope: ["profile", "email"],
     passReqToCallback: true
 },
-    async (req: Request, accessToken, refreshToken, profile, done:(err:any,user?:IUser|false)=>void) => {
+    async (req: Request, accessToken, refreshToken, profile, done) => {
         try {
             const { email, sub: googleId, picture } = profile._json
             console.log(profile, "profile")
@@ -45,7 +45,7 @@ passport.use(
         usernameField: "email",
         passwordField: "password",
         session: true
-    }, async (email, password, done:(err:any, user?:IUser|false)=>void) => {
+    }, async (email, password, done) => {
         try {
             const user = await verifyUserService({ email, password, provider: Provider.EMAIL })
             const typedUser: IUser = { ...user, omitPassword: () => ({ ...user, password: undefined }) }
