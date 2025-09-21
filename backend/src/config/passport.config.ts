@@ -17,7 +17,7 @@ passport.use(new GoogleStrategy({
     scope: ["profile", "email"],
     passReqToCallback: true
 },
-    async (req: Request, accessToken, refreshToken, profile, done) => {
+    async (req: Request, accessToken, refreshToken, profile, done:(err:any,user?:IUser|false)=>void) => {
         try {
             const { email, sub: googleId, picture } = profile._json
             console.log(profile, "profile")
@@ -45,19 +45,19 @@ passport.use(
         usernameField: "email",
         passwordField: "password",
         session: true
-    }, async (email, password, done) => {
+    }, async (email, password, done:(err:any, user?:IUser|false)=>void) => {
         try {
             const user = await verifyUserService({ email, password, provider: Provider.EMAIL })
             const typedUser: IUser = { ...user, omitPassword: () => ({ ...user, password: undefined }) }
             return done(null, typedUser)
         } catch (error: any) {
-            return done(error, false, { message: error?.message })
+            return done(error, false)
 
         }
     })
 )
 
-passport.serializeUser((user: any, done) => done(null, user.id))
+passport.serializeUser((user, done) => done(null, user.id))
 passport.deserializeUser(async (id: string, done) => {
   try {
    const user = await prisma.user.findUnique({
@@ -65,7 +65,7 @@ passport.deserializeUser(async (id: string, done) => {
     });
     if (!user) return done(null, false);
     const typedUser: IUser = { ...user, omitPassword: () => ({ ...user, password: undefined }) };
-    done(null, typedUser);
+    done(null, typedUser as IUser);
   } catch (err) {
     done(err as any, null);
   }
