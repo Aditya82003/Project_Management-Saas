@@ -16,6 +16,8 @@ export const changeRoleSchema = z.object({
     memberId:z.string().trim().min(1)
 })
 
+export const workspaceIdSchema=z.string().trim().min(1)
+
 export const createWorkspaceSchema=z.object({
     name:nameSchema,
     description:descriptionSchema
