@@ -1,4 +1,4 @@
-import { use } from "passport"
+import { TaskStatus } from "../generated/prisma"
 import prisma from "../prisma/cilent.prisma"
 import { BadRequestException, NotFoundException } from "../utilities/appError"
 import { generateInviteCode } from "../utilities/generateInviteCode"
@@ -45,18 +45,26 @@ export const createWorkspaceService = async (body: { name: string, description?:
 export const getWorkspaceByIdService = async (workspaceId: string) => {
     const workspace = await prisma.workspace.findUnique({
         where: { id: workspaceId },
+    })
+    if (!workspace) {
+        throw new NotFoundException("Workspace not found")
+    }
+    const members = await prisma.member.findMany({
+        where: { workspaceId },
         include: {
-            members: {
-                include: {
+            role: {
+                select: {
+                    id: true,
                     role: true
                 }
             }
         }
     })
-    if (!workspace) {
-        throw new NotFoundException("Workspace not found")
+    const workspaceWithMember = {
+        ...workspace,
+        members
     }
-    return workspace
+    return { workspace: workspaceWithMember }
 }
 
 export const getWorkspaceMemberService = async (workspaceId: string) => {
@@ -82,6 +90,44 @@ export const getWorkspaceMemberService = async (workspaceId: string) => {
         select: { id: true, role: true }
     })
     return { members, roles }
+}
+
+export const getWorkspaceAnalyticsService = async (workspaceId: string) => {
+    const currentDate = new Date()
+    const totalTasks = await prisma.task.count({
+        where: {
+            project: {
+                workspaceId
+            }
+        }
+    })
+    const overdueTask = await prisma.task.count({
+        where: {
+            project: {
+                workspaceId
+            },
+            dueDate: {
+                lt: currentDate
+            },
+            status: TaskStatus.DONE
+        }
+
+    })
+    const completedTask = await prisma.task.count({
+        where: {
+            project: {
+                workspaceId
+            },
+            status: TaskStatus.DONE
+        }
+    })
+    return {
+        analytics: {
+            totalTasks,
+            completedTask,
+            overdueTask
+        }
+    }
 }
 
 export const updateWorkspaceByIdService = async (workspaceId: string, name: string, description: string) => {
@@ -152,7 +198,7 @@ export const deleteWorkspaceService = async (workspaceId: string, userId: string
     if (!user) {
         throw new NotFoundException("User not found")
     }
-    const {updatedUser} = await prisma.$transaction(async (ts) => {
+    const { updatedUser } = await prisma.$transaction(async (ts) => {
         //delete all the tasks
         await ts.task.deleteMany({
             where: {
@@ -190,12 +236,12 @@ export const deleteWorkspaceService = async (workspaceId: string, userId: string
         })
 
         const updatedUser = await ts.user.findUnique({
-            where:{id:user.id},
-            include:{
-                currentWorkspace:true
+            where: { id: user.id },
+            include: {
+                currentWorkspace: true
             }
         })
-        return {updatedUser}
+        return { updatedUser }
     })
     return { currentWorkspace: updatedUser?.currentWorkspace }
 }
