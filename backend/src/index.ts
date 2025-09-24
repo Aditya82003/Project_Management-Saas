@@ -14,6 +14,7 @@ import userRoute from './routes/user.routes'
 import workspaceRoute from './routes/workspace.routes'
 import memberRoute from './routes/member.routes'
 import taskRoute from './routes/task.routes'
+import projectRoute from './routes/project.routes'
 import { BadRequestException } from './utilities/appError'
 import passport from 'passport'
 import "./config/passport.config"
@@ -74,7 +75,7 @@ app.use(`${BASE_PATH}/user`,isAuthenticated,userRoute)
 app.use(`${BASE_PATH}/workspace`,isAuthenticated,workspaceRoute)
 app.use(`${BASE_PATH}/member`,isAuthenticated,memberRoute)
 app.use(`${BASE_PATH}/task`,isAuthenticated,taskRoute)
-// app.use(`${BASE_PATH}/project`,isAuthenticated,projectRoute)
+app.use(`${BASE_PATH}/project`,isAuthenticated,projectRoute)
 
 //global middleware
 app.use(errorHandler)
