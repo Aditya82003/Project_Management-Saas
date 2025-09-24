@@ -87,7 +87,7 @@ model Task {
   assignedToId String?
   createdBy    User         @relation("CreatedTasks", fields: [createdById], references: [id])
   createdById  String
-  dueDate      DateTime
+  dueDate      DateTime?
   paid         Boolean?     @default(false)
   credit       Int?
   createdAt    DateTime     @default(now())

@@ -6625,7 +6625,7 @@ export namespace Prisma {
     priority: $Enums.TaskPriority
     assignedToId: string | null
     createdById: string
-    dueDate: Date
+    dueDate: Date | null
     paid: boolean | null
     credit: number | null
     createdAt: Date
@@ -6762,7 +6762,7 @@ export namespace Prisma {
       priority: $Enums.TaskPriority
       assignedToId: string | null
       createdById: string
-      dueDate: Date
+      dueDate: Date | null
       paid: boolean | null
       credit: number | null
       createdAt: Date
@@ -11445,7 +11445,7 @@ export namespace Prisma {
     priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority
     assignedToId?: StringNullableFilter<"Task"> | string | null
     createdById?: StringFilter<"Task"> | string
-    dueDate?: DateTimeFilter<"Task"> | Date | string
+    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
     paid?: BoolNullableFilter<"Task"> | boolean | null
     credit?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
@@ -11465,7 +11465,7 @@ export namespace Prisma {
     priority?: SortOrder
     assignedToId?: SortOrderInput | SortOrder
     createdById?: SortOrder
-    dueDate?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
     paid?: SortOrderInput | SortOrder
     credit?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -11488,7 +11488,7 @@ export namespace Prisma {
     priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority
     assignedToId?: StringNullableFilter<"Task"> | string | null
     createdById?: StringFilter<"Task"> | string
-    dueDate?: DateTimeFilter<"Task"> | Date | string
+    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
     paid?: BoolNullableFilter<"Task"> | boolean | null
     credit?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
@@ -11508,7 +11508,7 @@ export namespace Prisma {
     priority?: SortOrder
     assignedToId?: SortOrderInput | SortOrder
     createdById?: SortOrder
-    dueDate?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
     paid?: SortOrderInput | SortOrder
     credit?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -11533,7 +11533,7 @@ export namespace Prisma {
     priority?: EnumTaskPriorityWithAggregatesFilter<"Task"> | $Enums.TaskPriority
     assignedToId?: StringNullableWithAggregatesFilter<"Task"> | string | null
     createdById?: StringWithAggregatesFilter<"Task"> | string
-    dueDate?: DateTimeWithAggregatesFilter<"Task"> | Date | string
+    dueDate?: DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
     paid?: BoolNullableWithAggregatesFilter<"Task"> | boolean | null
     credit?: IntNullableWithAggregatesFilter<"Task"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
@@ -12026,7 +12026,7 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.TaskStatus
     priority?: $Enums.TaskPriority
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -12046,7 +12046,7 @@ export namespace Prisma {
     priority?: $Enums.TaskPriority
     assignedToId?: string | null
     createdById: string
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -12060,7 +12060,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12080,7 +12080,7 @@ export namespace Prisma {
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12097,7 +12097,7 @@ export namespace Prisma {
     priority?: $Enums.TaskPriority
     assignedToId?: string | null
     createdById: string
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -12111,7 +12111,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12128,7 +12128,7 @@ export namespace Prisma {
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13904,7 +13904,7 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.TaskStatus
     priority?: $Enums.TaskPriority
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -13922,7 +13922,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.TaskPriority
     createdById: string
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -13946,7 +13946,7 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.TaskStatus
     priority?: $Enums.TaskPriority
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -13964,7 +13964,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.TaskPriority
     assignedToId?: string | null
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -14130,7 +14130,7 @@ export namespace Prisma {
     priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority
     assignedToId?: StringNullableFilter<"Task"> | string | null
     createdById?: StringFilter<"Task"> | string
-    dueDate?: DateTimeFilter<"Task"> | Date | string
+    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
     paid?: BoolNullableFilter<"Task"> | boolean | null
     credit?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
@@ -14735,7 +14735,7 @@ export namespace Prisma {
     description?: string | null
     status?: $Enums.TaskStatus
     priority?: $Enums.TaskPriority
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -14753,7 +14753,7 @@ export namespace Prisma {
     priority?: $Enums.TaskPriority
     assignedToId?: string | null
     createdById: string
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -15274,7 +15274,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.TaskPriority
     createdById: string
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -15290,7 +15290,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.TaskPriority
     assignedToId?: string | null
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -15344,7 +15344,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15362,7 +15362,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     createdById?: StringFieldUpdateOperationsInput | string
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15378,7 +15378,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     createdById?: StringFieldUpdateOperationsInput | string
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15392,7 +15392,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15410,7 +15410,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15426,7 +15426,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15625,7 +15625,7 @@ export namespace Prisma {
     priority?: $Enums.TaskPriority
     assignedToId?: string | null
     createdById: string
-    dueDate: Date | string
+    dueDate?: Date | string | null
     paid?: boolean | null
     credit?: number | null
     createdAt?: Date | string
@@ -15639,7 +15639,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15657,7 +15657,7 @@ export namespace Prisma {
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15673,7 +15673,7 @@ export namespace Prisma {
     priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
-    dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paid?: NullableBoolFieldUpdateOperationsInput | boolean | null
     credit?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
