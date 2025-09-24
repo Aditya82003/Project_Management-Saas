@@ -1586,6 +1586,7 @@ export namespace Prisma {
     createdtasks: number
     accountProvider: number
     ownedWorkspaces: number
+    projects: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1594,6 +1595,7 @@ export namespace Prisma {
     createdtasks?: boolean | UserCountOutputTypeCountCreatedtasksArgs
     accountProvider?: boolean | UserCountOutputTypeCountAccountProviderArgs
     ownedWorkspaces?: boolean | UserCountOutputTypeCountOwnedWorkspacesArgs
+    projects?: boolean | UserCountOutputTypeCountProjectsArgs
   }
 
   // Custom InputTypes
@@ -1640,6 +1642,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountOwnedWorkspacesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WorkspaceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectWhereInput
   }
 
 
@@ -1977,6 +1986,7 @@ export namespace Prisma {
     accountProvider?: boolean | User$accountProviderArgs<ExtArgs>
     currentWorkspace?: boolean | User$currentWorkspaceArgs<ExtArgs>
     ownedWorkspaces?: boolean | User$ownedWorkspacesArgs<ExtArgs>
+    projects?: boolean | User$projectsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2029,6 +2039,7 @@ export namespace Prisma {
     accountProvider?: boolean | User$accountProviderArgs<ExtArgs>
     currentWorkspace?: boolean | User$currentWorkspaceArgs<ExtArgs>
     ownedWorkspaces?: boolean | User$ownedWorkspacesArgs<ExtArgs>
+    projects?: boolean | User$projectsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2047,6 +2058,7 @@ export namespace Prisma {
       accountProvider: Prisma.$AccountProviderPayload<ExtArgs>[]
       currentWorkspace: Prisma.$WorkspacePayload<ExtArgs> | null
       ownedWorkspaces: Prisma.$WorkspacePayload<ExtArgs>[]
+      projects: Prisma.$ProjectPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2459,6 +2471,7 @@ export namespace Prisma {
     accountProvider<T extends User$accountProviderArgs<ExtArgs> = {}>(args?: Subset<T, User$accountProviderArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountProviderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     currentWorkspace<T extends User$currentWorkspaceArgs<ExtArgs> = {}>(args?: Subset<T, User$currentWorkspaceArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     ownedWorkspaces<T extends User$ownedWorkspacesArgs<ExtArgs> = {}>(args?: Subset<T, User$ownedWorkspacesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    projects<T extends User$projectsArgs<ExtArgs> = {}>(args?: Subset<T, User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3030,6 +3043,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: WorkspaceScalarFieldEnum | WorkspaceScalarFieldEnum[]
+  }
+
+  /**
+   * User.projects
+   */
+  export type User$projectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: ProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: ProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectInclude<ExtArgs> | null
+    where?: ProjectWhereInput
+    orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[]
+    cursor?: ProjectWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[]
   }
 
   /**
@@ -5309,7 +5346,9 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
+    emoji: string | null
     workspaceId: string | null
+    createdById: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5318,7 +5357,9 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
+    emoji: string | null
     workspaceId: string | null
+    createdById: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5327,7 +5368,9 @@ export namespace Prisma {
     id: number
     name: number
     description: number
+    emoji: number
     workspaceId: number
+    createdById: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5338,7 +5381,9 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    emoji?: true
     workspaceId?: true
+    createdById?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5347,7 +5392,9 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    emoji?: true
     workspaceId?: true
+    createdById?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5356,7 +5403,9 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    emoji?: true
     workspaceId?: true
+    createdById?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5438,7 +5487,9 @@ export namespace Prisma {
     id: string
     name: string
     description: string | null
+    emoji: string | null
     workspaceId: string
+    createdById: string
     createdAt: Date
     updatedAt: Date
     _count: ProjectCountAggregateOutputType | null
@@ -5464,11 +5515,14 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    emoji?: boolean
     workspaceId?: boolean
+    createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     tasks?: boolean | Project$tasksArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
@@ -5476,42 +5530,53 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    emoji?: boolean
     workspaceId?: boolean
+    createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
   export type ProjectSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     description?: boolean
+    emoji?: boolean
     workspaceId?: boolean
+    createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
   export type ProjectSelectScalar = {
     id?: boolean
     name?: boolean
     description?: boolean
+    emoji?: boolean
     workspaceId?: boolean
+    createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "workspaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "emoji" | "workspaceId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     tasks?: boolean | Project$tasksArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $ProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5519,12 +5584,15 @@ export namespace Prisma {
     objects: {
       workspace: Prisma.$WorkspacePayload<ExtArgs>
       tasks: Prisma.$TaskPayload<ExtArgs>[]
+      createdBy: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       description: string | null
+      emoji: string | null
       workspaceId: string
+      createdById: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["project"]>
@@ -5923,6 +5991,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     tasks<T extends Project$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Project$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5955,7 +6024,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Project", 'String'>
     readonly name: FieldRef<"Project", 'String'>
     readonly description: FieldRef<"Project", 'String'>
+    readonly emoji: FieldRef<"Project", 'String'>
     readonly workspaceId: FieldRef<"Project", 'String'>
+    readonly createdById: FieldRef<"Project", 'String'>
     readonly createdAt: FieldRef<"Project", 'DateTime'>
     readonly updatedAt: FieldRef<"Project", 'DateTime'>
   }
@@ -10912,7 +10983,9 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     description: 'description',
+    emoji: 'emoji',
     workspaceId: 'workspaceId',
+    createdById: 'createdById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -11158,6 +11231,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderListRelationFilter
     currentWorkspace?: XOR<WorkspaceNullableScalarRelationFilter, WorkspaceWhereInput> | null
     ownedWorkspaces?: WorkspaceListRelationFilter
+    projects?: ProjectListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -11177,6 +11251,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderOrderByRelationAggregateInput
     currentWorkspace?: WorkspaceOrderByWithRelationInput
     ownedWorkspaces?: WorkspaceOrderByRelationAggregateInput
+    projects?: ProjectOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -11199,6 +11274,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderListRelationFilter
     currentWorkspace?: XOR<WorkspaceNullableScalarRelationFilter, WorkspaceWhereInput> | null
     ownedWorkspaces?: WorkspaceListRelationFilter
+    projects?: ProjectListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -11376,22 +11452,28 @@ export namespace Prisma {
     id?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
     description?: StringNullableFilter<"Project"> | string | null
+    emoji?: StringNullableFilter<"Project"> | string | null
     workspaceId?: StringFilter<"Project"> | string
+    createdById?: StringFilter<"Project"> | string
     createdAt?: DateTimeFilter<"Project"> | Date | string
     updatedAt?: DateTimeFilter<"Project"> | Date | string
     workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
     tasks?: TaskListRelationFilter
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type ProjectOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    emoji?: SortOrderInput | SortOrder
     workspaceId?: SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workspace?: WorkspaceOrderByWithRelationInput
     tasks?: TaskOrderByRelationAggregateInput
+    createdBy?: UserOrderByWithRelationInput
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -11401,18 +11483,23 @@ export namespace Prisma {
     NOT?: ProjectWhereInput | ProjectWhereInput[]
     name?: StringFilter<"Project"> | string
     description?: StringNullableFilter<"Project"> | string | null
+    emoji?: StringNullableFilter<"Project"> | string | null
     workspaceId?: StringFilter<"Project"> | string
+    createdById?: StringFilter<"Project"> | string
     createdAt?: DateTimeFilter<"Project"> | Date | string
     updatedAt?: DateTimeFilter<"Project"> | Date | string
     workspace?: XOR<WorkspaceScalarRelationFilter, WorkspaceWhereInput>
     tasks?: TaskListRelationFilter
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type ProjectOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    emoji?: SortOrderInput | SortOrder
     workspaceId?: SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProjectCountOrderByAggregateInput
@@ -11427,7 +11514,9 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Project"> | string
     name?: StringWithAggregatesFilter<"Project"> | string
     description?: StringNullableWithAggregatesFilter<"Project"> | string | null
+    emoji?: StringNullableWithAggregatesFilter<"Project"> | string | null
     workspaceId?: StringWithAggregatesFilter<"Project"> | string
+    createdById?: StringWithAggregatesFilter<"Project"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Project"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Project"> | Date | string
   }
@@ -11725,6 +11814,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderCreateNestedManyWithoutUserInput
     currentWorkspace?: WorkspaceCreateNestedOneWithoutUserWithCurrentWorkspaceInput
     ownedWorkspaces?: WorkspaceCreateNestedManyWithoutOwnerInput
+    projects?: ProjectCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -11743,6 +11833,7 @@ export namespace Prisma {
     createdtasks?: TaskUncheckedCreateNestedManyWithoutCreatedByInput
     accountProvider?: AccountProviderUncheckedCreateNestedManyWithoutUserInput
     ownedWorkspaces?: WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -11761,6 +11852,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderUpdateManyWithoutUserNestedInput
     currentWorkspace?: WorkspaceUpdateOneWithoutUserWithCurrentWorkspaceNestedInput
     ownedWorkspaces?: WorkspaceUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -11779,6 +11871,7 @@ export namespace Prisma {
     createdtasks?: TaskUncheckedUpdateManyWithoutCreatedByNestedInput
     accountProvider?: AccountProviderUncheckedUpdateManyWithoutUserNestedInput
     ownedWorkspaces?: WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -11957,17 +12050,21 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    emoji?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutProjectsInput
     tasks?: TaskCreateNestedManyWithoutProjectInput
+    createdBy: UserCreateNestedOneWithoutProjectsInput
   }
 
   export type ProjectUncheckedCreateInput = {
     id?: string
     name: string
     description?: string | null
+    emoji?: string | null
     workspaceId: string
+    createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
@@ -11977,17 +12074,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutProjectsNestedInput
     tasks?: TaskUpdateManyWithoutProjectNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutProjectsNestedInput
   }
 
   export type ProjectUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
     workspaceId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
@@ -11997,7 +12098,9 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    emoji?: string | null
     workspaceId: string
+    createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12006,6 +12109,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12014,7 +12118,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
     workspaceId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12395,6 +12501,12 @@ export namespace Prisma {
     none?: WorkspaceWhereInput
   }
 
+  export type ProjectListRelationFilter = {
+    every?: ProjectWhereInput
+    some?: ProjectWhereInput
+    none?: ProjectWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -12413,6 +12525,10 @@ export namespace Prisma {
   }
 
   export type WorkspaceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProjectOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12532,20 +12648,10 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
-  export type ProjectListRelationFilter = {
-    every?: ProjectWhereInput
-    some?: ProjectWhereInput
-    none?: ProjectWhereInput
-  }
-
   export type UserListRelationFilter = {
     every?: UserWhereInput
     some?: UserWhereInput
     none?: UserWhereInput
-  }
-
-  export type ProjectOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type UserOrderByRelationAggregateInput = {
@@ -12625,7 +12731,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    emoji?: SortOrder
     workspaceId?: SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12634,7 +12742,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    emoji?: SortOrder
     workspaceId?: SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12643,7 +12753,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    emoji?: SortOrder
     workspaceId?: SortOrder
+    createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12970,6 +13082,13 @@ export namespace Prisma {
     connect?: WorkspaceWhereUniqueInput | WorkspaceWhereUniqueInput[]
   }
 
+  export type ProjectCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<ProjectCreateWithoutCreatedByInput, ProjectUncheckedCreateWithoutCreatedByInput> | ProjectCreateWithoutCreatedByInput[] | ProjectUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ProjectCreateOrConnectWithoutCreatedByInput | ProjectCreateOrConnectWithoutCreatedByInput[]
+    createMany?: ProjectCreateManyCreatedByInputEnvelope
+    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+  }
+
   export type MemberUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
@@ -13003,6 +13122,13 @@ export namespace Prisma {
     connectOrCreate?: WorkspaceCreateOrConnectWithoutOwnerInput | WorkspaceCreateOrConnectWithoutOwnerInput[]
     createMany?: WorkspaceCreateManyOwnerInputEnvelope
     connect?: WorkspaceWhereUniqueInput | WorkspaceWhereUniqueInput[]
+  }
+
+  export type ProjectUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<ProjectCreateWithoutCreatedByInput, ProjectUncheckedCreateWithoutCreatedByInput> | ProjectCreateWithoutCreatedByInput[] | ProjectUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ProjectCreateOrConnectWithoutCreatedByInput | ProjectCreateOrConnectWithoutCreatedByInput[]
+    createMany?: ProjectCreateManyCreatedByInputEnvelope
+    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -13105,6 +13231,20 @@ export namespace Prisma {
     deleteMany?: WorkspaceScalarWhereInput | WorkspaceScalarWhereInput[]
   }
 
+  export type ProjectUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<ProjectCreateWithoutCreatedByInput, ProjectUncheckedCreateWithoutCreatedByInput> | ProjectCreateWithoutCreatedByInput[] | ProjectUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ProjectCreateOrConnectWithoutCreatedByInput | ProjectCreateOrConnectWithoutCreatedByInput[]
+    upsert?: ProjectUpsertWithWhereUniqueWithoutCreatedByInput | ProjectUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: ProjectCreateManyCreatedByInputEnvelope
+    set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+    disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+    delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+    update?: ProjectUpdateWithWhereUniqueWithoutCreatedByInput | ProjectUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: ProjectUpdateManyWithWhereWithoutCreatedByInput | ProjectUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
+  }
+
   export type MemberUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<MemberCreateWithoutUserInput, MemberUncheckedCreateWithoutUserInput> | MemberCreateWithoutUserInput[] | MemberUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MemberCreateOrConnectWithoutUserInput | MemberCreateOrConnectWithoutUserInput[]
@@ -13173,6 +13313,20 @@ export namespace Prisma {
     update?: WorkspaceUpdateWithWhereUniqueWithoutOwnerInput | WorkspaceUpdateWithWhereUniqueWithoutOwnerInput[]
     updateMany?: WorkspaceUpdateManyWithWhereWithoutOwnerInput | WorkspaceUpdateManyWithWhereWithoutOwnerInput[]
     deleteMany?: WorkspaceScalarWhereInput | WorkspaceScalarWhereInput[]
+  }
+
+  export type ProjectUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<ProjectCreateWithoutCreatedByInput, ProjectUncheckedCreateWithoutCreatedByInput> | ProjectCreateWithoutCreatedByInput[] | ProjectUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ProjectCreateOrConnectWithoutCreatedByInput | ProjectCreateOrConnectWithoutCreatedByInput[]
+    upsert?: ProjectUpsertWithWhereUniqueWithoutCreatedByInput | ProjectUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: ProjectCreateManyCreatedByInputEnvelope
+    set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+    disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+    delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+    update?: ProjectUpdateWithWhereUniqueWithoutCreatedByInput | ProjectUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: ProjectUpdateManyWithWhereWithoutCreatedByInput | ProjectUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutOwnedWorkspacesInput = {
@@ -13370,6 +13524,12 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
+  export type UserCreateNestedOneWithoutProjectsInput = {
+    create?: XOR<UserCreateWithoutProjectsInput, UserUncheckedCreateWithoutProjectsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProjectsInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type TaskUncheckedCreateNestedManyWithoutProjectInput = {
     create?: XOR<TaskCreateWithoutProjectInput, TaskUncheckedCreateWithoutProjectInput> | TaskCreateWithoutProjectInput[] | TaskUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutProjectInput | TaskCreateOrConnectWithoutProjectInput[]
@@ -13397,6 +13557,14 @@ export namespace Prisma {
     update?: TaskUpdateWithWhereUniqueWithoutProjectInput | TaskUpdateWithWhereUniqueWithoutProjectInput[]
     updateMany?: TaskUpdateManyWithWhereWithoutProjectInput | TaskUpdateManyWithWhereWithoutProjectInput[]
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutProjectsNestedInput = {
+    create?: XOR<UserCreateWithoutProjectsInput, UserUncheckedCreateWithoutProjectsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProjectsInput
+    upsert?: UserUpsertWithoutProjectsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProjectsInput, UserUpdateWithoutProjectsInput>, UserUncheckedUpdateWithoutProjectsInput>
   }
 
   export type TaskUncheckedUpdateManyWithoutProjectNestedInput = {
@@ -14074,6 +14242,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ProjectCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    description?: string | null
+    emoji?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutProjectsInput
+    tasks?: TaskCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    description?: string | null
+    emoji?: string | null
+    workspaceId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectCreateOrConnectWithoutCreatedByInput = {
+    where: ProjectWhereUniqueInput
+    create: XOR<ProjectCreateWithoutCreatedByInput, ProjectUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type ProjectCreateManyCreatedByInputEnvelope = {
+    data: ProjectCreateManyCreatedByInput | ProjectCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type MemberUpsertWithWhereUniqueWithoutUserInput = {
     where: MemberWhereUniqueInput
     update: XOR<MemberUpdateWithoutUserInput, MemberUncheckedUpdateWithoutUserInput>
@@ -14247,6 +14447,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Workspace"> | Date | string
   }
 
+  export type ProjectUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: ProjectWhereUniqueInput
+    update: XOR<ProjectUpdateWithoutCreatedByInput, ProjectUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<ProjectCreateWithoutCreatedByInput, ProjectUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type ProjectUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: ProjectWhereUniqueInput
+    data: XOR<ProjectUpdateWithoutCreatedByInput, ProjectUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type ProjectUpdateManyWithWhereWithoutCreatedByInput = {
+    where: ProjectScalarWhereInput
+    data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type ProjectScalarWhereInput = {
+    AND?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
+    OR?: ProjectScalarWhereInput[]
+    NOT?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
+    id?: StringFilter<"Project"> | string
+    name?: StringFilter<"Project"> | string
+    description?: StringNullableFilter<"Project"> | string | null
+    emoji?: StringNullableFilter<"Project"> | string | null
+    workspaceId?: StringFilter<"Project"> | string
+    createdById?: StringFilter<"Project"> | string
+    createdAt?: DateTimeFilter<"Project"> | Date | string
+    updatedAt?: DateTimeFilter<"Project"> | Date | string
+  }
+
   export type UserCreateWithoutOwnedWorkspacesInput = {
     id?: string
     name: string
@@ -14262,6 +14492,7 @@ export namespace Prisma {
     createdtasks?: TaskCreateNestedManyWithoutCreatedByInput
     accountProvider?: AccountProviderCreateNestedManyWithoutUserInput
     currentWorkspace?: WorkspaceCreateNestedOneWithoutUserWithCurrentWorkspaceInput
+    projects?: ProjectCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutOwnedWorkspacesInput = {
@@ -14279,6 +14510,7 @@ export namespace Prisma {
     assignedtasks?: TaskUncheckedCreateNestedManyWithoutAssignedToInput
     createdtasks?: TaskUncheckedCreateNestedManyWithoutCreatedByInput
     accountProvider?: AccountProviderUncheckedCreateNestedManyWithoutUserInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutOwnedWorkspacesInput = {
@@ -14314,15 +14546,19 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    emoji?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: TaskCreateNestedManyWithoutProjectInput
+    createdBy: UserCreateNestedOneWithoutProjectsInput
   }
 
   export type ProjectUncheckedCreateWithoutWorkspaceInput = {
     id?: string
     name: string
     description?: string | null
+    emoji?: string | null
+    createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
@@ -14353,6 +14589,7 @@ export namespace Prisma {
     createdtasks?: TaskCreateNestedManyWithoutCreatedByInput
     accountProvider?: AccountProviderCreateNestedManyWithoutUserInput
     ownedWorkspaces?: WorkspaceCreateNestedManyWithoutOwnerInput
+    projects?: ProjectCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCurrentWorkspaceInput = {
@@ -14370,6 +14607,7 @@ export namespace Prisma {
     createdtasks?: TaskUncheckedCreateNestedManyWithoutCreatedByInput
     accountProvider?: AccountProviderUncheckedCreateNestedManyWithoutUserInput
     ownedWorkspaces?: WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCurrentWorkspaceInput = {
@@ -14408,6 +14646,7 @@ export namespace Prisma {
     createdtasks?: TaskUpdateManyWithoutCreatedByNestedInput
     accountProvider?: AccountProviderUpdateManyWithoutUserNestedInput
     currentWorkspace?: WorkspaceUpdateOneWithoutUserWithCurrentWorkspaceNestedInput
+    projects?: ProjectUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOwnedWorkspacesInput = {
@@ -14425,6 +14664,7 @@ export namespace Prisma {
     assignedtasks?: TaskUncheckedUpdateManyWithoutAssignedToNestedInput
     createdtasks?: TaskUncheckedUpdateManyWithoutCreatedByNestedInput
     accountProvider?: AccountProviderUncheckedUpdateManyWithoutUserNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type MemberUpsertWithWhereUniqueWithoutWorkspaceInput = {
@@ -14457,18 +14697,6 @@ export namespace Prisma {
   export type ProjectUpdateManyWithWhereWithoutWorkspaceInput = {
     where: ProjectScalarWhereInput
     data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyWithoutWorkspaceInput>
-  }
-
-  export type ProjectScalarWhereInput = {
-    AND?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
-    OR?: ProjectScalarWhereInput[]
-    NOT?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
-    id?: StringFilter<"Project"> | string
-    name?: StringFilter<"Project"> | string
-    description?: StringNullableFilter<"Project"> | string | null
-    workspaceId?: StringFilter<"Project"> | string
-    createdAt?: DateTimeFilter<"Project"> | Date | string
-    updatedAt?: DateTimeFilter<"Project"> | Date | string
   }
 
   export type UserUpsertWithWhereUniqueWithoutCurrentWorkspaceInput = {
@@ -14518,6 +14746,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderCreateNestedManyWithoutUserInput
     currentWorkspace?: WorkspaceCreateNestedOneWithoutUserWithCurrentWorkspaceInput
     ownedWorkspaces?: WorkspaceCreateNestedManyWithoutOwnerInput
+    projects?: ProjectCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMembershipInput = {
@@ -14535,6 +14764,7 @@ export namespace Prisma {
     createdtasks?: TaskUncheckedCreateNestedManyWithoutCreatedByInput
     accountProvider?: AccountProviderUncheckedCreateNestedManyWithoutUserInput
     ownedWorkspaces?: WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMembershipInput = {
@@ -14618,6 +14848,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderUpdateManyWithoutUserNestedInput
     currentWorkspace?: WorkspaceUpdateOneWithoutUserWithCurrentWorkspaceNestedInput
     ownedWorkspaces?: WorkspaceUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipInput = {
@@ -14635,6 +14866,7 @@ export namespace Prisma {
     createdtasks?: TaskUncheckedUpdateManyWithoutCreatedByNestedInput
     accountProvider?: AccountProviderUncheckedUpdateManyWithoutUserNestedInput
     ownedWorkspaces?: WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type WorkspaceUpsertWithoutMembersInput = {
@@ -14770,6 +15002,47 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserCreateWithoutProjectsInput = {
+    id?: string
+    name: string
+    email: string
+    password?: string | null
+    profilePicture?: string | null
+    isActive?: boolean
+    lastLogin?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membership?: MemberCreateNestedManyWithoutUserInput
+    assignedtasks?: TaskCreateNestedManyWithoutAssignedToInput
+    createdtasks?: TaskCreateNestedManyWithoutCreatedByInput
+    accountProvider?: AccountProviderCreateNestedManyWithoutUserInput
+    currentWorkspace?: WorkspaceCreateNestedOneWithoutUserWithCurrentWorkspaceInput
+    ownedWorkspaces?: WorkspaceCreateNestedManyWithoutOwnerInput
+  }
+
+  export type UserUncheckedCreateWithoutProjectsInput = {
+    id?: string
+    name: string
+    email: string
+    password?: string | null
+    profilePicture?: string | null
+    isActive?: boolean
+    lastLogin?: Date | string | null
+    currentWorkspaceId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membership?: MemberUncheckedCreateNestedManyWithoutUserInput
+    assignedtasks?: TaskUncheckedCreateNestedManyWithoutAssignedToInput
+    createdtasks?: TaskUncheckedCreateNestedManyWithoutCreatedByInput
+    accountProvider?: AccountProviderUncheckedCreateNestedManyWithoutUserInput
+    ownedWorkspaces?: WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
+  }
+
+  export type UserCreateOrConnectWithoutProjectsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutProjectsInput, UserUncheckedCreateWithoutProjectsInput>
+  }
+
   export type WorkspaceUpsertWithoutProjectsInput = {
     update: XOR<WorkspaceUpdateWithoutProjectsInput, WorkspaceUncheckedUpdateWithoutProjectsInput>
     create: XOR<WorkspaceCreateWithoutProjectsInput, WorkspaceUncheckedCreateWithoutProjectsInput>
@@ -14821,20 +15094,71 @@ export namespace Prisma {
     data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutProjectInput>
   }
 
+  export type UserUpsertWithoutProjectsInput = {
+    update: XOR<UserUpdateWithoutProjectsInput, UserUncheckedUpdateWithoutProjectsInput>
+    create: XOR<UserCreateWithoutProjectsInput, UserUncheckedCreateWithoutProjectsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutProjectsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutProjectsInput, UserUncheckedUpdateWithoutProjectsInput>
+  }
+
+  export type UserUpdateWithoutProjectsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membership?: MemberUpdateManyWithoutUserNestedInput
+    assignedtasks?: TaskUpdateManyWithoutAssignedToNestedInput
+    createdtasks?: TaskUpdateManyWithoutCreatedByNestedInput
+    accountProvider?: AccountProviderUpdateManyWithoutUserNestedInput
+    currentWorkspace?: WorkspaceUpdateOneWithoutUserWithCurrentWorkspaceNestedInput
+    ownedWorkspaces?: WorkspaceUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutProjectsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePicture?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    lastLogin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentWorkspaceId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membership?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    assignedtasks?: TaskUncheckedUpdateManyWithoutAssignedToNestedInput
+    createdtasks?: TaskUncheckedUpdateManyWithoutCreatedByNestedInput
+    accountProvider?: AccountProviderUncheckedUpdateManyWithoutUserNestedInput
+    ownedWorkspaces?: WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
   export type ProjectCreateWithoutTasksInput = {
     id?: string
     name: string
     description?: string | null
+    emoji?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutProjectsInput
+    createdBy: UserCreateNestedOneWithoutProjectsInput
   }
 
   export type ProjectUncheckedCreateWithoutTasksInput = {
     id?: string
     name: string
     description?: string | null
+    emoji?: string | null
     workspaceId: string
+    createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14859,6 +15183,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderCreateNestedManyWithoutUserInput
     currentWorkspace?: WorkspaceCreateNestedOneWithoutUserWithCurrentWorkspaceInput
     ownedWorkspaces?: WorkspaceCreateNestedManyWithoutOwnerInput
+    projects?: ProjectCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAssignedtasksInput = {
@@ -14876,6 +15201,7 @@ export namespace Prisma {
     createdtasks?: TaskUncheckedCreateNestedManyWithoutCreatedByInput
     accountProvider?: AccountProviderUncheckedCreateNestedManyWithoutUserInput
     ownedWorkspaces?: WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAssignedtasksInput = {
@@ -14898,6 +15224,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderCreateNestedManyWithoutUserInput
     currentWorkspace?: WorkspaceCreateNestedOneWithoutUserWithCurrentWorkspaceInput
     ownedWorkspaces?: WorkspaceCreateNestedManyWithoutOwnerInput
+    projects?: ProjectCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedtasksInput = {
@@ -14915,6 +15242,7 @@ export namespace Prisma {
     assignedtasks?: TaskUncheckedCreateNestedManyWithoutAssignedToInput
     accountProvider?: AccountProviderUncheckedCreateNestedManyWithoutUserInput
     ownedWorkspaces?: WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedtasksInput = {
@@ -14937,16 +15265,20 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutProjectsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutProjectsNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
     workspaceId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14977,6 +15309,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderUpdateManyWithoutUserNestedInput
     currentWorkspace?: WorkspaceUpdateOneWithoutUserWithCurrentWorkspaceNestedInput
     ownedWorkspaces?: WorkspaceUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedtasksInput = {
@@ -14994,6 +15327,7 @@ export namespace Prisma {
     createdtasks?: TaskUncheckedUpdateManyWithoutCreatedByNestedInput
     accountProvider?: AccountProviderUncheckedUpdateManyWithoutUserNestedInput
     ownedWorkspaces?: WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutCreatedtasksInput = {
@@ -15022,6 +15356,7 @@ export namespace Prisma {
     accountProvider?: AccountProviderUpdateManyWithoutUserNestedInput
     currentWorkspace?: WorkspaceUpdateOneWithoutUserWithCurrentWorkspaceNestedInput
     ownedWorkspaces?: WorkspaceUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedtasksInput = {
@@ -15039,6 +15374,7 @@ export namespace Prisma {
     assignedtasks?: TaskUncheckedUpdateManyWithoutAssignedToNestedInput
     accountProvider?: AccountProviderUncheckedUpdateManyWithoutUserNestedInput
     ownedWorkspaces?: WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type RolePermissionCreateWithoutRoleInput = {
@@ -15189,6 +15525,7 @@ export namespace Prisma {
     createdtasks?: TaskCreateNestedManyWithoutCreatedByInput
     currentWorkspace?: WorkspaceCreateNestedOneWithoutUserWithCurrentWorkspaceInput
     ownedWorkspaces?: WorkspaceCreateNestedManyWithoutOwnerInput
+    projects?: ProjectCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAccountProviderInput = {
@@ -15206,6 +15543,7 @@ export namespace Prisma {
     assignedtasks?: TaskUncheckedCreateNestedManyWithoutAssignedToInput
     createdtasks?: TaskUncheckedCreateNestedManyWithoutCreatedByInput
     ownedWorkspaces?: WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAccountProviderInput = {
@@ -15239,6 +15577,7 @@ export namespace Prisma {
     createdtasks?: TaskUpdateManyWithoutCreatedByNestedInput
     currentWorkspace?: WorkspaceUpdateOneWithoutUserWithCurrentWorkspaceNestedInput
     ownedWorkspaces?: WorkspaceUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountProviderInput = {
@@ -15256,6 +15595,7 @@ export namespace Prisma {
     assignedtasks?: TaskUncheckedUpdateManyWithoutAssignedToNestedInput
     createdtasks?: TaskUncheckedUpdateManyWithoutCreatedByNestedInput
     ownedWorkspaces?: WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type MemberCreateManyUserInput = {
@@ -15312,6 +15652,16 @@ export namespace Prisma {
     name: string
     description?: string | null
     inviteCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectCreateManyCreatedByInput = {
+    id?: string
+    name: string
+    description?: string | null
+    emoji?: string | null
+    workspaceId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -15496,6 +15846,38 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ProjectUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutProjectsNestedInput
+    tasks?: TaskUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MemberCreateManyWorkspaceInput = {
     id?: string
     userId: string
@@ -15507,6 +15889,8 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    emoji?: string | null
+    createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -15548,15 +15932,19 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: TaskUpdateManyWithoutProjectNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutProjectsNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
@@ -15566,6 +15954,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    emoji?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15585,6 +15975,7 @@ export namespace Prisma {
     createdtasks?: TaskUpdateManyWithoutCreatedByNestedInput
     accountProvider?: AccountProviderUpdateManyWithoutUserNestedInput
     ownedWorkspaces?: WorkspaceUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCurrentWorkspaceInput = {
@@ -15602,6 +15993,7 @@ export namespace Prisma {
     createdtasks?: TaskUncheckedUpdateManyWithoutCreatedByNestedInput
     accountProvider?: AccountProviderUncheckedUpdateManyWithoutUserNestedInput
     ownedWorkspaces?: WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutCurrentWorkspaceInput = {

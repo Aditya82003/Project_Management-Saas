@@ -155,7 +155,9 @@ exports.Prisma.ProjectScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  emoji: 'emoji',
   workspaceId: 'workspaceId',
+  createdById: 'createdById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
