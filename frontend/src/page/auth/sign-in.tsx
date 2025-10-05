@@ -15,15 +15,17 @@ import { useMutation } from "@tanstack/react-query"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import GoogleoauthButton from "@/components/auth/google-auth-button"
+import Logo from "@/components/logo"
+import { loginMutationFn } from "@/components/lib/api"
 
 const SignIn = () => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const returnUrl = searchParams.get("returnUrl")
 
-  // const {mutation,isPending}=useMutation({
-  //   mutationFn:()=>{}
-  // })
+  const { mutate, isPending } = useMutation({
+    mutationFn: loginMutationFn
+  })
 
   const formSchema = z.object({
     email: z.string().trim().email("Invalid email address").min(1, {
@@ -43,8 +45,20 @@ const SignIn = () => {
     }
   })
 
-  const onSubmit = (value: z.infer<typeof formSchema>) => {
-    console.log(value)
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (isPending) return
+
+    mutate(values, {
+      onSuccess: (data) => {
+        const user = data.user
+        console.log(user)
+        const decodeUrl = returnUrl ? decodeURIComponent(returnUrl) : null
+        navigate(decodeUrl || `/workspace/${user.currentWorkspaceId}`)
+      },
+      onError: (error) => {
+        console.log(error)
+      }
+    })
   }
 
   return (
@@ -53,7 +67,7 @@ const SignIn = () => {
         <Link
           to="/"
           className="flex items-center gap-2 font-medium">
-          <h1>Team Sync</h1>
+          <Logo />Team sync
         </Link>
         <div className="flex flex-col gap-6">
           <Card>
@@ -114,7 +128,7 @@ const SignIn = () => {
                       </div>
                       <Button
                         type="submit"
-                        // disabled={isPending}
+                        disabled={isPending}
                         className="w-full">
                         Login
                       </Button>
@@ -122,7 +136,7 @@ const SignIn = () => {
                     <div className="flex items-center justify-center text-sm">
                       <p>Don&apos;t have an account?{" "}</p>
                       <Link to="/sign-up" className="underline-offset-4">
-                      Sign up
+                        Sign up
                       </Link>
                     </div>
                   </div>

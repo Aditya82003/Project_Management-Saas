@@ -68,7 +68,7 @@ export const deleteProjectController = asyncHandler(async (req: Request, res: Re
 })
 
 export const getAllProjectsInWorkspaceController = asyncHandler(async (req: Request, res: Response) => {
-    const workspaceId = workspaceIdSchema.parse(req.params.id)
+    const workspaceId = workspaceIdSchema.parse(req.params.workspaceId)
     const userId = req.user?.id
     if (!userId) {
         throw new UnauthorizedException("Unauthorized PLease login")
@@ -79,6 +79,7 @@ export const getAllProjectsInWorkspaceController = asyncHandler(async (req: Requ
 
     const pageSize = parseInt(req.query.page as string) || 10
     const pageNumber = parseInt(req.query.limit as string) || 1
+
 
     const { projects,totalCount,totalPages,skip } = await getProjectsInWorkspaceService(workspaceId,pageSize,pageNumber)    
 

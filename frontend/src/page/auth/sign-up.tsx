@@ -1,15 +1,22 @@
 import GoogleoauthButton from "@/components/auth/google-auth-button"
+import { registerMutationFn } from "@/components/lib/api"
+import Logo from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import {  Link, useNavigate } from "react-router"
 import { z } from "zod"
 
 const SignUp = () => {
   const navigate=useNavigate()
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: registerMutationFn
+  })
 
   const formSchema = z.object({
     name: z.string().trim().min(1,{
@@ -33,7 +40,15 @@ const SignUp = () => {
   })
 
   const onSubmit=(value:z.infer<typeof formSchema>)=>{
-    console.log(value)
+    if(isPending) return
+    mutate(value,{
+      onSuccess:()=>{
+        navigate("/")
+      },
+      onError:(error)=>{
+        console.log(error)
+      }
+    })
   }
 
   return (
@@ -42,7 +57,7 @@ const SignUp = () => {
         <Link
           to="/"
           className="flex items-center gap-2 font-medium">
-          <h1>Team Sync</h1>
+          <Logo/>Team Sync.
         </Link>
         <div className="flex flex-col gap-6">
           <Card>
@@ -111,14 +126,14 @@ const SignUp = () => {
                       </div>
                       <Button
                         type="submit"
-                        // disabled={isPending}
+                        disabled={isPending}
                         className="w-full">
                         Sign up
                       </Button>
                     </div>
                     <div className="flex items-center justify-center text-sm">
                       <p>Already have an account?{" "}</p>
-                      <Link to="/sign-up" className="underline-offset-4">
+                      <Link to="/" className="underline-offset-4">
                         Sign in
                       </Link>
                     </div>
