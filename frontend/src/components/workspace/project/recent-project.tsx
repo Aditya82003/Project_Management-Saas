@@ -26,7 +26,10 @@ const RecentProject = () => {
             </div>
         )}
         <ul role="list" className="space-y-2">
-            {projects?.map()}
+            {projects?.map((project)=>(
+
+                <div>{project.name}</div>
+            ))}
         </ul>
     </div>
     

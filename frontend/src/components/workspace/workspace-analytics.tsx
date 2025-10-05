@@ -1,6 +1,6 @@
 import useWorkspaceId from "@/hooks/use-worksapce-id"
 import { useQuery } from "@tanstack/react-query"
-import { getWorkspaceAnalyticsQueryFn } from "../lib/api"
+import { getWorkspaceAnalyticsQueryFn } from "@/lib/api"
 import AnalyticsCard from "./common/AnalyticsCard"
 
 const WorkspaceAnalytics = () => {

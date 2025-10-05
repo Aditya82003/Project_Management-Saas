@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import GoogleoauthButton from "@/components/auth/google-auth-button"
 import Logo from "@/components/logo"
-import { loginMutationFn } from "@/components/lib/api"
+import { loginMutationFn } from "@/lib/api"
 
 const SignIn = () => {
   const navigate = useNavigate()

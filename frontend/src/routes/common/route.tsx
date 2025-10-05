@@ -2,7 +2,7 @@ import SignIn from '@/page/auth/sign-in'
 import SignUp from '@/page/auth/sign-up'
 import { AUTH_ROUTES, BASE_ROUTES, PROTECTED_ROUTES } from './routePaths'
 import GoogleOAuthFailure from '@/page/auth/GoogleOAuthFailure'
-import Dashboard from '@/page/auth/workspace/Dashboard'
+import Dashboard from '@/page/workspace/Dashboard'
 
 
 export const authenicationRoutePaths=[

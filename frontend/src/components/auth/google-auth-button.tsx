@@ -1,4 +1,4 @@
-import { baseURL } from "../lib/base-url"
+import { baseURL } from "../../lib/base-url"
 import { Button } from "../ui/button"
 
 const GoogleoauthButton = (props: { label: string }) => {

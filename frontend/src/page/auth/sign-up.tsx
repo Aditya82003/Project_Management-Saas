@@ -1,5 +1,5 @@
 import GoogleoauthButton from "@/components/auth/google-auth-button"
-import { registerMutationFn } from "@/components/lib/api"
+import { registerMutationFn } from "@/lib/api"
 import Logo from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"

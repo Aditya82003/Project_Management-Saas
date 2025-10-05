@@ -3,9 +3,10 @@ import { SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, use
 import { useNavigate } from "react-router"
 import { useQuery } from "@tanstack/react-query"
 import  { useEffect, useState } from "react"
-import { getAllWorkspacesUserIsMemberQueryFn } from "../lib/api"
+import { getAllWorkspacesUserIsMemberQueryFn } from "@/lib/api"
 import useWorkspaceId from "@/hooks/use-worksapce-id"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import useCreateWorkspaceDialog from "@/hooks/use-create-workpsace-dialog"
 
 type WorkspaceType = {
     id: string,
@@ -15,6 +16,7 @@ const WorkspaceSwitcher = () => {
     const navigate = useNavigate()
     const { isMobile } = useSidebar()
 
+    const {onOpen}=useCreateWorkspaceDialog()
     const workspaceId = useWorkspaceId()
 
     const [activeWorkspace, setActiveWorkspace] = useState<WorkspaceType>();
@@ -50,6 +52,7 @@ const WorkspaceSwitcher = () => {
             <SidebarGroupLabel className="w-full justify-between pr-0 ">
                 <span>Workspaces</span>
                 <button
+                    onClick={onOpen}
                     className="flex size-5 items-center justify-center rounded-full border">
                     <Plus className="size-3.5" />
                 </button>
@@ -111,7 +114,7 @@ const WorkspaceSwitcher = () => {
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
                                 className="flex gap-2 p-2 !cursor-pointer"
-                            // onClick={onOpen}
+                            onClick={onOpen}
                             >
                                 <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                                     <Plus className="size-4" />
