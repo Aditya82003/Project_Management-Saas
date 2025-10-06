@@ -1,4 +1,4 @@
-import type { AllProjectPayloadType, AllProjectResponseType, AllWorkspaceResponseType, AnalyticsResponseType, CurrentUserResponseType, LoginResponseType, LoginType, RegisterType, UserType } from "@/types/api.types";
+import type { AllProjectPayloadType, AllProjectResponseType, AllWorkspaceResponseType, AnalyticsResponseType, CurrentUserResponseType, LoginResponseType, LoginType, RegisterType, UserType, WorkspaceByIdResponseType } from "@/types/api.types";
 import API from "./axios-client";
 
 export const loginMutationFn=async(data:LoginType):Promise<LoginResponseType>=>{
@@ -34,6 +34,11 @@ export const getAllWorkspacesUserIsMemberQueryFn=async():Promise<AllWorkspaceRes
 
 export const getWorkspaceAnalyticsQueryFn=async(workspaceId:string):Promise<AnalyticsResponseType>=>{
     const response=await API.get(`/workspace/analytics/${workspaceId}`)
+    return response.data
+}
+
+export const getWorkspaceByIdQueryFn=async(workspaceId:string):Promise<WorkspaceByIdResponseType>=>{
+    const response =await API.get(`/workspace/${workspaceId}`)
     return response.data
 }
 

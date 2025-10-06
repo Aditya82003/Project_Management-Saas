@@ -1,8 +1,10 @@
 
 import { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
-import { CheckCircle, LayoutDashboard,Users, type LucideIcon } from 'lucide-react'
+import { CheckCircle, LayoutDashboard,Settings,Users, type LucideIcon } from 'lucide-react'
 import useWorkspaceId from '@/hooks/use-worksapce-id'
 import { Link } from 'react-router'
+import { useAuthContext } from '@/context/auth-provider'
+import { Permissions } from '@/constant'
 
 type ItemType={
     title:string
@@ -10,6 +12,10 @@ type ItemType={
     icon:LucideIcon
 }
 const NavMain = () => {
+    const {hasPermission}=useAuthContext()
+
+    const canManageSettings=hasPermission(Permissions.MANAGE_WORKSPACE_SETTINGS)
+
     const pathname=location.pathname
     const workspaceId=useWorkspaceId()
 
@@ -28,7 +34,14 @@ const NavMain = () => {
             title:"Members",
             url:`/workspace/${workspaceId}/members`,
             icon:Users
-        }
+        },
+        ...(canManageSettings?[
+            {
+            title: "Settings",
+            url: `/workspace/${workspaceId}/settings`,
+            icon: Settings,
+          },
+        ]:[])
     ]
   return (
     <SidebarGroup className='pl-0'>

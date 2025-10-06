@@ -1,3 +1,5 @@
+import type { PermissionType } from "@/constant"
+
 export type LoginType = {
     email: string
     password: string
@@ -28,92 +30,112 @@ export type UserType = {
     currentWorkspace: {
         id: string
         name: string
-        owner:string
+        owner: string
         inviteCode: string
     }
 }
 
-export type CurrentUserResponseType={
-    message:string
-    user:UserType
+export type CurrentUserResponseType = {
+    message: string
+    user: UserType
 }
 
 //*********workspace ************
 
-export type WorkspaceType={
-    id:string
-    name:string
-    description?:string
-    inviteCode:string
-    owner:string
+export type WorkspaceType = {
+    id: string
+    name: string
+    description?: string
+    inviteCode: string
+    owner: string
 }
 
-export type CreateWorkpsaceType={
-    name:string
-    description:string
+export type CreateWorkpsaceType = {
+    name: string
+    description: string
 }
 
-export type EditWorkspaceType={
-    workspaceId:string
-    data:{
-        name:string
-        description:string
+export type EditWorkspaceType = {
+    workspaceId: string
+    data: {
+        name: string
+        description: string
     }
 }
 
-export type CreateWorkspaceResponseType={
-    message:string
-    workspace:WorkspaceType
+export type CreateWorkspaceResponseType = {
+    message: string
+    workspace: WorkspaceType
 }
 
-export type AllWorkspaceResponseType={
-    message:string
-    workspaces:WorkspaceType[]
+export type AllWorkspaceResponseType = {
+    message: string
+    workspaces: WorkspaceType[]
 }
 
-export type AnalyticsResponseType={
-    message:string
-    analytics:{
-        totalTasks:number,
-        overdueTasks:number,
-        completedTasks:number
-    }
-}
-
-export type Pagination ={
-    totalCount:number
-    pageSize:number
-    pageNumber:number
-    totalPages:number
-    skip:number
-    limit:number
-}
-
-export type ProjectType={
-    id:string
-    name:string
-    emoji:string
-    description:string
-    workspace:string
-    createdBy:{
+export type WorkspaceWithMembersType = WorkspaceType & {
+    members:{
         id:string
-        name:string
-        profilePicture:string
+        userId:string
+        workpaceId:string
+        role:{
+            id:string
+            role:string
+            permissions:PermissionType[]
+        }
+        joinedAt:Date
+        createdAt:Date
+    }[]
+}
+
+export type WorkspaceByIdResponseType = {
+    message: string
+    workspace: WorkspaceWithMembersType
+}
+
+export type AnalyticsResponseType = {
+    message: string
+    analytics: {
+        totalTasks: number,
+        overdueTasks: number,
+        completedTasks: number
     }
-    createdAt:Date
-    updatedAt:Date
 }
 
-export type AllProjectPayloadType={
-    workspaceId:string
-    pageNumber?:number
-    pageSize?:number
-    keyword?:string
-    skip?:boolean
+export type Pagination = {
+    totalCount: number
+    pageSize: number
+    pageNumber: number
+    totalPages: number
+    skip: number
+    limit: number
 }
 
-export type AllProjectResponseType={
-    message:string
-    projects:ProjectType[]
-    pagination:Pagination
+export type ProjectType = {
+    id: string
+    name: string
+    emoji: string
+    description: string
+    workspace: string
+    createdBy: {
+        id: string
+        name: string
+        profilePicture: string
+    }
+    createdAt: Date
+    updatedAt: Date
+}
+
+export type AllProjectPayloadType = {
+    workspaceId: string
+    pageNumber?: number
+    pageSize?: number
+    keyword?: string
+    skip?: boolean
+}
+
+export type AllProjectResponseType = {
+    message: string
+    projects: ProjectType[]
+    pagination: Pagination
 }
