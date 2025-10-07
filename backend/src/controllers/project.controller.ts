@@ -10,8 +10,9 @@ import { createProjectService, deleteProjectService, getProjectAnalyticsService,
 import { createProjectSchema, projectIdSchema, updateProjectSchema } from "../validation/project.validation";
 
 export const createProjectController = asyncHandler(async (req: Request, res: Response) => {
+    console.log(req.body)
     const body = createProjectSchema.parse(req.body)
-    const workspaceId = workspaceIdSchema.parse(req.params.id)
+    const workspaceId = workspaceIdSchema.parse(req.params.workspaceId)
     const userId = req.user?.id
     if (!userId) {
         throw new UnauthorizedException("Unauthorized PLease login")
@@ -20,7 +21,7 @@ export const createProjectController = asyncHandler(async (req: Request, res: Re
     const { role } = await getMemberRoleInWorkspaceService(userId, workspaceId)
     roleGuard(role, [PermissionType.CREATE_PROJECT])
 
-    const { project } = await createProjectService(workspaceId, userId, body)
+    const { project } = await createProjectService(userId,workspaceId, body)
 
     return res.status(HTTPSTATUS.OK).json({
         message: "Project created successfully",

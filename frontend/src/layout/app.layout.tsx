@@ -2,6 +2,7 @@ import Header from "@/components/header"
 import AppSidebar from "@/components/sidebar/AppSidebar"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import CreateWorkspaceDialog from "@/components/workspace/create-workspace-dialog"
+import CreateProjectDialog from "@/components/workspace/project/create-project-dialog"
 import { AuthProvider } from "@/context/auth-provider"
 import { Outlet } from "react-router"
 
@@ -19,6 +20,7 @@ const AppLayout = () => {
                             </div>
                         </>
                         <CreateWorkspaceDialog />
+                        <CreateProjectDialog />
                     </div>
                 </SidebarInset>
             </SidebarProvider>

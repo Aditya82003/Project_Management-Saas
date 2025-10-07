@@ -126,6 +126,20 @@ export type ProjectType = {
     updatedAt: Date
 }
 
+export type CreateProjectPayloadType={
+    workspaceId: string
+    data: {
+        name: string
+        emoji: string
+        description: string
+    }
+}
+
+export type ProjectResponseType={
+    message: string
+    project: ProjectType
+}
+
 export type AllProjectPayloadType = {
     workspaceId: string
     pageNumber?: number
