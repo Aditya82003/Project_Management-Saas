@@ -4,12 +4,14 @@ import { NuqsAdapter } from "nuqs/adapters/react";
 import './index.css'
 import App from './App.tsx'
 import QueryProvider from './context/query-provider.tsx'
+import { Toaster } from 'sonner';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryProvider>
       <NuqsAdapter>
         <App />
+        <Toaster/>
       </NuqsAdapter>
     </QueryProvider>
   </StrictMode>,

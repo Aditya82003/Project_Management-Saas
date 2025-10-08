@@ -14,6 +14,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { useNavigate } from "react-router"
+import { toast } from "sonner"
 import z from "zod"
 
 const CreateProjectForm = ({ onClose }: { onClose: () => void }) => {
@@ -62,11 +63,13 @@ const CreateProjectForm = ({ onClose }: { onClose: () => void }) => {
                 queryClient.invalidateQueries({
                     queryKey: ["allProjects",workspaceId]
                 })
+                toast.success("Project created successfully")
                 navigate(`/workspace/${workspaceId}/project/${project.id}`)
                 setTimeout(() => onClose(), 500);
             },
             onError:(error)=>{
                 console.log(error)
+                toast.error("Something went wrong")
             }
         })
     }
@@ -139,7 +142,7 @@ const CreateProjectForm = ({ onClose }: { onClose: () => void }) => {
                             className="flex place-self-end  h-[40px] text-white font-semibold"
                             type="submit"
                         >
-                            {<Loader className="animate-spin" />}
+                            {isPending && <Loader className="animate-spin" />}
                             Create
                         </Button>
                     </form>

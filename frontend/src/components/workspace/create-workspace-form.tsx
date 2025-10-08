@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createWorkspaceMutationFn } from "@/lib/api"
 import { Textarea } from "../ui/textarea"
+import { toast } from "sonner"
 
 const CreateWorkspaceForm = ({
     onClose
@@ -17,12 +18,13 @@ const CreateWorkspaceForm = ({
 
     const queryClient = useQueryClient()
 
-    const {mutate,isPending}=useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: createWorkspaceMutationFn
     })
 
     const formSchema = z.object({
-        name: z.string().trim().min(1, { message: "Workspace name is required" }),
+        name: z.string().trim().min(1,
+             { message: "Workspace name is required" }),
         description: z.string().trim()
     })
 
@@ -34,12 +36,26 @@ const CreateWorkspaceForm = ({
         }
     })
 
-    const onSubmit=()=>{
-
+    const onSubmit = (value:z.infer<typeof formSchema>) => {
+        if(isPending) return
+        mutate(value,{
+            onSuccess:(data)=>{
+                queryClient.resetQueries({
+                    queryKey:["userWorkspaces"]
+                })
+                const workspace = data.workspace
+                onClose()
+                navigate(`/workspace/${workspace.id}`)
+            },
+            onError:(error)=>{
+                console.log(error)
+                toast(error.message)
+            }
+        })
     }
 
     return (
-        <main className=" w-full flex flex-row min-h-[590px] h-auto max-w-full">
+        <main className="w-full flex flex-row  min-h-[590px] h-auto max-w-full">
             <div className="h-full px-10 py-10 flex-1">
                 <div className="mb-5">
                     <h1

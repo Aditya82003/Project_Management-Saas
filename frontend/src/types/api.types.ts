@@ -153,3 +153,8 @@ export type AllProjectResponseType = {
     projects: ProjectType[]
     pagination: Pagination
 }
+
+export type ProjectByIdPayloadType={
+    workspaceId: string
+    projectId: string
+}

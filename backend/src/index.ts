@@ -25,9 +25,17 @@ const app =express()
 const PORT=config.PORT || 5000
 const  BASE_PATH=config.BASE_PATH
 
+//allow cross origin request
+app.use(cors({
+    origin:config.FRONTEND_ORIGIN,
+    credentials:true
+}))
+
 //parse json data and added them into req.body
 app.use(express.json())
 app.use(urlencoded({extended:true}))
+
+
 
 //session for passport
 // app.use(session({
@@ -56,11 +64,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-//allow cross origin request
-app.use(cors({
-    origin:config.FRONTEND_ORIGIN,
-    credentials:true
-}))
 
 
 app.get('/',asyncHandler(async(req:Request,res:Response)=>{

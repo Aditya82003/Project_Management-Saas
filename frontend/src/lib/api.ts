@@ -1,4 +1,4 @@
-import type { AllProjectPayloadType, AllProjectResponseType, AllWorkspaceResponseType, AnalyticsResponseType, CreateProjectPayloadType, CurrentUserResponseType, LoginResponseType, LoginType, ProjectResponseType, RegisterType, UserType, WorkspaceByIdResponseType } from "@/types/api.types";
+import type { AllProjectPayloadType, AllProjectResponseType, AllWorkspaceResponseType, AnalyticsResponseType, CreateProjectPayloadType, CreateWorkpsaceType, CreateWorkspaceResponseType, CurrentUserResponseType, LoginResponseType, LoginType, ProjectByIdPayloadType, ProjectResponseType, RegisterType, UserType, WorkspaceByIdResponseType } from "@/types/api.types";
 import API from "./axios-client";
 
 export const loginMutationFn = async (data: LoginType): Promise<LoginResponseType> => {
@@ -22,7 +22,7 @@ export const getCurrentUserQueryFn = async (): Promise<CurrentUserResponseType> 
 
 //******************Workspace*******************
 
-export const createWorkspaceMutationFn = async (data: { name: string }): Promise<UserType> => {
+export const createWorkspaceMutationFn = async (data:CreateWorkpsaceType): Promise<CreateWorkspaceResponseType> => {
     const response = await API.post('/workspace/create', data)
     return response.data
 }
@@ -69,5 +69,10 @@ export const getProjectsInWorkspaceQueryFn = async ({
     pageNumber = 1,
 }: AllProjectPayloadType): Promise<AllProjectResponseType> => {
     const response = await API.get(`/project/workspace/${workspaceId}/all?pageSize=${pageSize}&pageNumber=${pageNumber}`)
+    return response.data
+}
+
+export const deleteProjectMutationFn = async ({workspaceId,projectId}:ProjectByIdPayloadType):Promise<{message:string}> => {
+    const response = await API.delete(`/project/${projectId}/workspace/${workspaceId}/delete`)
     return response.data
 }

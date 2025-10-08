@@ -23,6 +23,7 @@ import { useAuthContext } from "@/context/auth-provider";
 import { EllipsisIcon, Loader, LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import LogoutDialog from "./logout-dialog";
 
 const AppSidebar = () => {
   const { isLoading, user } = useAuthContext()
@@ -33,6 +34,7 @@ const AppSidebar = () => {
   const [isOpen, setIsopen] = useState(true);
 
   return (
+    <>
     <Sidebar collapsible="icon">
       <SidebarHeader className="!py-0 dark:bg-background">
         <div className="flex gap-2 items-center justify-start w-full px-1 h-[50px]">
@@ -93,7 +95,7 @@ const AppSidebar = () => {
                     align="start"
                     sideOffset={4}>
                     <DropdownMenuGroup></DropdownMenuGroup>
-                    <DropdownMenuSeparator />
+                    {/* <DropdownMenuSeparator /> */}
                     <DropdownMenuItem onClick={() => setIsopen(true)}>
                       <LogOut />
                       Log out
@@ -106,6 +108,8 @@ const AppSidebar = () => {
       </SidebarFooter>
       <SidebarRail/>
     </Sidebar>
+    <LogoutDialog isOpen={isOpen} setIsOpen={setIsopen}/>
+    </>
   );
 };
 
