@@ -5,29 +5,28 @@ import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 import useWorkspaceId from "@/hooks/use-worksapce-id"
+import { editProjectMutationFn } from "@/lib/api"
 import type { ProjectType } from "@/types/api.types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useState, type FC } from "react"
+import { useEffect, useState, type FC } from "react"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import z from "zod"
 interface EditProjectFormProps {
     onClose: () => void,
     project?: ProjectType
 }
 const EditProjectForm: FC<EditProjectFormProps> = ({ onClose, project }) => {
-    console.log(project, onClose)
-
     const workspaceId = useWorkspaceId()
     const queryClient = useQueryClient()
 
     const [emoji, setEmoji] = useState("📊")
     const projectId = project?.id as string
 
-    // const { mutate, isPending } = useMutation({
-    //     mutationFn: editProjectMutationFn
-
-    // })
+    const { mutate, isPending } = useMutation({
+        mutationFn: editProjectMutationFn
+    })
 
     const formSchema = z.object({
         name: z.string().min(1, {
@@ -39,16 +38,46 @@ const EditProjectForm: FC<EditProjectFormProps> = ({ onClose, project }) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: project?.name as string,
-            description: project?.description as string
+            name:"",
+            description:""
         }
     })
 
-    const handleEmojiSelection=(emoji:string)=>{
+    useEffect(() => {
+        if (project) {
+            setEmoji(project.emoji)
+            form.setValue("name", project.name)
+            form.setValue("description", project.description)
+        }
+    }, [project, form])
+
+    const handleEmojiSelection = (emoji: string) => {
         setEmoji(emoji)
     }
 
-    const onSubmit = (value:z.infer<typeof formSchema>)=>{
+    const onSubmit = (values: z.infer<typeof formSchema>) => {
+        if (isPending) return
+        const payload = {
+            projectId,
+            workspaceId,
+            data: { emoji, ...values }
+        }
+        mutate(payload, {
+            onSuccess: (_data) => {
+                queryClient.invalidateQueries({
+                    queryKey: ["singleProject", projectId]
+                })
+                queryClient.invalidateQueries({
+                    queryKey: ["allProjects", workspaceId]
+                })
+                toast.success("Project updated successfully")
+                setTimeout(() => onClose(), 100);
+            },
+            onError: (error) => {
+                console.log(error)
+                toast.error("Something went wrong")
+            }
+        })
 
     }
 
@@ -60,7 +89,7 @@ const EditProjectForm: FC<EditProjectFormProps> = ({ onClose, project }) => {
                     <p className="text-muted-foreground text-sm leading-tight">Update the project details to refine task management</p>
                 </div>
                 <Form {...form} >
-                    <form>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700">Select Emoji</label>
                             <Popover>
@@ -91,17 +120,17 @@ const EditProjectForm: FC<EditProjectFormProps> = ({ onClose, project }) => {
                                 )}
                             />
                         </div>
-                         <div className="mb-4">
+                        <div className="mb-4">
                             <FormField
                                 control={form.control}
                                 name="description"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                           Project Description
-                                           <span className="text-xs font-extralight ml-2">
-                                            Optional
-                                           </span>
+                                            Project Description
+                                            <span className="text-xs font-extralight ml-2">
+                                                Optional
+                                            </span>
                                         </FormLabel>
                                         <FormControl>
                                             <Textarea rows={4} placeholder="Project description"  {...field} />

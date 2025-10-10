@@ -26,7 +26,6 @@ const ProjectHeader = () => {
     })
 
     const project = data?.project
-    console.log(project)
 
     const projectEmoji = project?.emoji || "🚀"
     const projectName = project?.name || "Project Untitle"

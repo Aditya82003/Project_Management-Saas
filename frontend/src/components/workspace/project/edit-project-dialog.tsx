@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import type { ProjectType } from "@/types/api.types"
 import { Edit3 } from "lucide-react"
 import { useState } from "react"
@@ -17,6 +17,7 @@ const EditProjectDialog=(props:{project?:ProjectType})=>{
                     <button ><Edit3 className="w-5 h-5"/></button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-lg border-0">
+                    <DialogTitle className="hiddden sr-only">Edit Project</DialogTitle>
                     <EditProjectForm onClose={onClose} project={props.project}/>
                 </DialogContent>
             </Dialog>

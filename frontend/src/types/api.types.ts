@@ -140,6 +140,16 @@ export type ProjectResponseType={
     project: ProjectType
 }
 
+export type EditProjectPayloadType={
+    workspaceId:string
+    projectId: string
+    data: {
+        emoji: string
+        name: string
+        description: string
+    }
+}
+
 export type AllProjectPayloadType = {
     workspaceId: string
     pageNumber?: number

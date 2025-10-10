@@ -1,4 +1,4 @@
-import type { AllProjectPayloadType, AllProjectResponseType, AllWorkspaceResponseType, AnalyticsResponseType, CreateProjectPayloadType, CreateWorkpsaceType, CreateWorkspaceResponseType, CurrentUserResponseType, LoginResponseType, LoginType, ProjectByIdPayloadType, ProjectResponseType, RegisterType, UserType, WorkspaceByIdResponseType } from "@/types/api.types";
+import type { AllProjectPayloadType, AllProjectResponseType, AllWorkspaceResponseType, AnalyticsResponseType, CreateProjectPayloadType, CreateWorkpsaceType, CreateWorkspaceResponseType, CurrentUserResponseType, EditProjectPayloadType, LoginResponseType, LoginType, ProjectByIdPayloadType, ProjectResponseType, RegisterType, UserType, WorkspaceByIdResponseType } from "@/types/api.types";
 import API from "./axios-client";
 
 export const loginMutationFn = async (data: LoginType): Promise<LoginResponseType> => {
@@ -60,6 +60,11 @@ export const invitedUserJoinWorkspaceMutationFn = async (
 
 export const createProjectMutationFn = async ({ workspaceId, data }: CreateProjectPayloadType): Promise<ProjectResponseType> => {
     const response = await API.post(`/project/workspace/${workspaceId}/create`, data)
+    return response.data
+}
+
+export const editProjectMutationFn = async ({ workspaceId, projectId, data }: EditProjectPayloadType): Promise<ProjectResponseType> => {
+    const response = await API.put(`/project/${projectId}/workspace/${workspaceId}/update`, data)
     return response.data
 }
 
