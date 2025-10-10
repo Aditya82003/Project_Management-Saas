@@ -12,30 +12,33 @@ const LogoutDialog = (props: {
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
     const { isOpen, setIsOpen } = props
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
-    const queryClient=useQueryClient()
+    const queryClient = useQueryClient()
 
-    const {mutate,isPending} = useMutation({
-        mutationFn:logOutMutationFn,
-        onSuccess:()=>{
+    const { mutate, isPending } = useMutation({
+        mutationFn: logOutMutationFn,
+        onSuccess: () => {
             queryClient.resetQueries({
                 queryKey:["authUser"]
             })
+            // queryClient.clear()
+            // localStorage.removeItem("authUser")
+            // sessionStorage.clear()
             toast.success("Logged out successfully")
             navigate("/")
             setIsOpen(false)
         },
-        onError:(error)=>{
+        onError: (error) => {
             console.log(error)
             toast.error(error.message)
         }
     })
 
-    const handleLogout=useCallback(()=>{
-        if(isPending) return
+    const handleLogout = useCallback(() => {
+        if (isPending) return
         mutate()
-    },[isPending,mutate])
+    }, [isPending, mutate])
     return (
         <>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -49,10 +52,10 @@ const LogoutDialog = (props: {
                     </DialogHeader>
                     <DialogFooter>
                         <Button disabled={isPending} type="button" onClick={handleLogout}>
-                            {isPending && <Loader className="animate-spin"/>}
+                            {isPending && <Loader className="animate-spin" />}
                             Sign Out
                         </Button>
-                        <Button type="button" onClick={()=>setIsOpen(false)}>
+                        <Button type="button" onClick={() => setIsOpen(false)}>
                             Cancel
                         </Button>
                     </DialogFooter>

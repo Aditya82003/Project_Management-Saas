@@ -110,7 +110,7 @@ export const getProjectByIdController = asyncHandler(async (req: Request, res: R
     const { role } = await getMemberRoleInWorkspaceService(userId, workspaceId)    
     roleGuard(role, [PermissionType.VIEW_ONLY])    
 
-    const project = await getProjectByIdService(projectId,workspaceId)    
+    const project = await getProjectByIdService(workspaceId,projectId)    
 
     return res.status(HTTPSTATUS.OK).json({
         message: "Project fetched successfully",

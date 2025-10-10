@@ -21,7 +21,7 @@ import NavProjects from "./NavProjects";
 import useWorkspaceId from "@/hooks/use-worksapce-id";
 import { useAuthContext } from "@/context/auth-provider";
 import { EllipsisIcon, Loader, LogOut } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import LogoutDialog from "./logout-dialog";
 
@@ -31,7 +31,7 @@ const AppSidebar = () => {
   const workspaceId = useWorkspaceId()
   const { open } = useSidebar()
 
-  const [isOpen, setIsopen] = useState(true);
+  const [isOpen, setIsopen] = useState(false);
 
   return (
     <>
@@ -95,7 +95,6 @@ const AppSidebar = () => {
                     align="start"
                     sideOffset={4}>
                     <DropdownMenuGroup></DropdownMenuGroup>
-                    {/* <DropdownMenuSeparator /> */}
                     <DropdownMenuItem onClick={() => setIsopen(true)}>
                       <LogOut />
                       Log out

@@ -72,6 +72,11 @@ export const getProjectsInWorkspaceQueryFn = async ({
     return response.data
 }
 
+export const getProjectByIdQueryFn = async ({workspaceId,projectId}:ProjectByIdPayloadType):Promise<ProjectResponseType> => {
+    const response = await API.get(`/project/${projectId}/workspace/${workspaceId}`)
+    return response.data
+}
+
 export const deleteProjectMutationFn = async ({workspaceId,projectId}:ProjectByIdPayloadType):Promise<{message:string}> => {
     const response = await API.delete(`/project/${projectId}/workspace/${workspaceId}/delete`)
     return response.data

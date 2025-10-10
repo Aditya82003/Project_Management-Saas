@@ -136,7 +136,7 @@ export const getProjectByIdService = async (workspaceId: string, projectId: stri
     if (!project) {
         throw new NotFoundException("Project not found or does not exist in this workspace")
     }
-    return { project }
+    return { ...project }
 } 
 
 export const getProjectAnalyticsService = async (

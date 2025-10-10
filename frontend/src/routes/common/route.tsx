@@ -3,6 +3,7 @@ import SignUp from '@/page/auth/sign-up'
 import { AUTH_ROUTES, BASE_ROUTES, PROTECTED_ROUTES } from './routePaths'
 import GoogleOAuthFailure from '@/page/auth/GoogleOAuthFailure'
 import Dashboard from '@/page/workspace/Dashboard'
+import ProjectDetails from '@/page/workspace/ProjectDetails'
 
 
 export const authenicationRoutePaths=[
@@ -20,5 +21,5 @@ export const protectedRoutePaths=[
     {path:PROTECTED_ROUTES.TASKS,element:<SignIn />},
     {path:PROTECTED_ROUTES.MEMBERS,element:<SignIn />},
     {path:PROTECTED_ROUTES.SETTINGS,element:<SignIn />},
-    {path:PROTECTED_ROUTES.PROJECT_DETAILS,element:<SignIn />},
+    {path:PROTECTED_ROUTES.PROJECT_DETAILS,element:<ProjectDetails/>},
 ]
