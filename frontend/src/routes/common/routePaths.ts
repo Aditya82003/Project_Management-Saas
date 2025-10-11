@@ -5,6 +5,7 @@ export const AUTH_ROUTES = {
 }
 
 export const PROTECTED_ROUTES = {
+    CREATE:"/workspace/create",
     WORKSPACE: "/workspace/:workspaceId",
     TASKS: "/workspace/:workspaceId/tasks",
     MEMBERS: "/workspace/:workspaceId/members",

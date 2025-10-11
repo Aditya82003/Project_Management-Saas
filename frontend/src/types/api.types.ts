@@ -93,6 +93,11 @@ export type WorkspaceByIdResponseType = {
     workspace: WorkspaceWithMembersType
 }
 
+export type DeleteWorkspaceResponseType = {
+    message: string
+    currentWorkspace: WorkspaceType    
+}
+
 export type AnalyticsResponseType = {
     message: string
     analytics: {

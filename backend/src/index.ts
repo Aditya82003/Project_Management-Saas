@@ -24,8 +24,9 @@ const app =express()
 
 const PORT=config.PORT || 5000
 const  BASE_PATH=config.BASE_PATH
+console.log("first")
 
-//allow cross origin request
+// allow cross origin request
 app.use(cors({
     origin:config.FRONTEND_ORIGIN,
     credentials:true
@@ -36,16 +37,6 @@ app.use(express.json())
 app.use(urlencoded({extended:true}))
 
 
-
-//session for passport
-// app.use(session({
-//     name:"session",
-//     keys:[config.SESSION_SECRET],
-//     maxAge:24*60*60*100,
-//     secure:config.MODE_ENV==="PRODUCTION",
-//     httpOnly:true,
-//     sameSite:"lax" 
-// }))
 app.use(
   session({
     name: "session",

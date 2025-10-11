@@ -26,14 +26,15 @@ export const createWorkspaceService = async (body: { name: string, description?:
                 inviteCode: generateInviteCode()
             }
         })
-        await prisma.member.create({
+        console.log(workspace)
+        await ts.member.create({
             data: {
                 userId,
                 workspaceId: workspace.id,
                 roleId: ownerRole.id
             }
         })
-        await prisma.user.update({
+        await ts.user.update({
             where: { id: userId },
             data: { currentWorkspaceId: workspace.id }
         })

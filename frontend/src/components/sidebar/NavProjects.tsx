@@ -75,7 +75,7 @@ const NavProjects = () => {
   }
   return (
     <>
-      <SidebarGroup>
+      <SidebarGroup >
         <SidebarGroupLabel className='w-full justify-between pr-0'>
           <span>Projects</span>
           <PermissionGuard requiredPermission={Permissions.CREATE_PROJECT}>
@@ -115,7 +115,7 @@ const NavProjects = () => {
             projects.map((project) => {
               const projectUrl = `/workspace/${workspaceId}/project/${project.id}`
               return (
-                <SidebarMenuItem key={project.id}>
+                <SidebarMenuItem  key={project.id}>
                   <SidebarMenuButton asChild isActive={projectUrl === pathname}>
                     <Link to={projectUrl}>{project.emoji}<span>{project.name}</span></Link>
                   </SidebarMenuButton>

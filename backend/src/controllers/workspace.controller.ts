@@ -12,6 +12,7 @@ import { get } from "http";
 export const createWorkspaceController = asyncHandler(async (req: Request, res: Response) => {
     const body = createWorkspaceSchema.parse(req.body)
     const userId = req.user?.id
+    console.log(body,userId)
     if (!userId) {
         return res.status(HTTPSTATUS.UNAUTHORIZED).json({
             message: "Unauthorized PLease login"
