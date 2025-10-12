@@ -25,3 +25,16 @@ export const getAvatarColor = (initials: string): string => {
 
     return colors[hash % colors.length];
 }
+
+export const  transformOptions=(option:string[],iconMap?:Record<string,React.ComponentType<{className?:string}>>)=>
+    option.map((value)=>({
+        label:value.replace(/_/g, " ")
+        .toLowerCase()
+        .replace(/\b\w/g, (char) => char.toUpperCase()),
+        value:value,
+        iconMap:iconMap ? iconMap[value] : undefined
+    }))
+
+export const transformStatusEnum =(status:string)=>{
+    return status.replace(/_/g, " ")
+}

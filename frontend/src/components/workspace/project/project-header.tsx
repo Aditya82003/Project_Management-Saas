@@ -5,6 +5,7 @@ import { getProjectByIdQueryFn } from "@/lib/api"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router"
 import EditProjectDialog from "./edit-project-dialog"
+import CreateTaskDialog from "../task/create-task-dialog"
 
 
 const ProjectHeader = () => {
@@ -49,7 +50,7 @@ const ProjectHeader = () => {
                     <EditProjectDialog project={project}/>
                 </PermissionGuard>
             </div>
-            <h1>Project</h1>
+            <CreateTaskDialog projectId={projectId}/>
 
         </div>
     )
