@@ -1,4 +1,4 @@
-import type { PermissionType } from "@/constant"
+import { Role, type PermissionType, type TaskPriorityEnumType, type TaskStatusEnumType } from "@/constant"
 
 export type LoginType = {
     email: string
@@ -74,17 +74,17 @@ export type AllWorkspaceResponseType = {
 }
 
 export type WorkspaceWithMembersType = WorkspaceType & {
-    members:{
-        id:string
-        userId:string
-        workpaceId:string
-        role:{
-            id:string
-            role:string
-            permissions:PermissionType[]
+    members: {
+        id: string
+        userId: string
+        workpaceId: string
+        role: {
+            id: string
+            role: string
+            permissions: PermissionType[]
         }
-        joinedAt:Date
-        createdAt:Date
+        joinedAt: Date
+        createdAt: Date
     }[]
 }
 
@@ -93,9 +93,38 @@ export type WorkspaceByIdResponseType = {
     workspace: WorkspaceWithMembersType
 }
 
+export type AllMembersInWorskpaceResponseType = {
+    message: string
+    members: {
+        id: string
+        user: {
+            id: string
+            name: string
+            email: string
+            profilePicture: string | null
+        }
+        worskpaceId: string
+        role: {
+            id: string
+            role: Role
+        }
+        joinedAt: Date
+    }[]
+    roles:RoleType[]
+}
+
+export type ChangeMemberRoleInWorkspacePayloadType = {
+    workspaceId: string
+    data:{
+        roleId:string,
+        memberId:string
+    }
+}
+
+
 export type DeleteWorkspaceResponseType = {
     message: string
-    currentWorkspace: WorkspaceType    
+    currentWorkspace: WorkspaceType
 }
 
 export type AnalyticsResponseType = {
@@ -131,7 +160,12 @@ export type ProjectType = {
     updatedAt: Date
 }
 
-export type CreateProjectPayloadType={
+export type RoleType = {
+    id: string
+    role: Role
+}
+
+export type CreateProjectPayloadType = {
     workspaceId: string
     data: {
         name: string
@@ -140,13 +174,13 @@ export type CreateProjectPayloadType={
     }
 }
 
-export type ProjectResponseType={
+export type ProjectResponseType = {
     message: string
     project: ProjectType
 }
 
-export type EditProjectPayloadType={
-    workspaceId:string
+export type EditProjectPayloadType = {
+    workspaceId: string
     projectId: string
     data: {
         emoji: string
@@ -169,7 +203,52 @@ export type AllProjectResponseType = {
     pagination: Pagination
 }
 
-export type ProjectByIdPayloadType={
+export type ProjectByIdPayloadType = {
     workspaceId: string
     projectId: string
+}
+
+
+// task
+
+export type CreateTaskPayloadType = {
+    workspaceId: string
+    projectId: string
+    data: {
+        title: string
+        description: string
+        priority: TaskPriorityEnumType
+        status: TaskStatusEnumType
+        assignedToId: string
+        dueDate: Date
+    }
+}
+
+export type TaskType = {
+    id: string
+    title: string
+    description: string
+    project?: {
+        id: string
+        name: string
+        emoji: string
+    }
+    status: TaskStatusEnumType
+    priority: TaskPriorityEnumType
+    assignedTo: {
+        id: string
+        name: string
+        profilePicture: string
+    }
+    createdBy: {
+        id: string
+        name: string
+        profilePicture: string
+    }
+    dueDate: Date
+    taskCode: string
+    paid?: boolean
+    credit?: number
+    createdAt: Date
+    updatedAt: Date
 }

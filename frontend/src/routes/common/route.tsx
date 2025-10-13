@@ -5,6 +5,7 @@ import GoogleOAuthFailure from '@/page/auth/GoogleOAuthFailure'
 import Dashboard from '@/page/workspace/Dashboard'
 import ProjectDetails from '@/page/workspace/ProjectDetails'
 import Settings from '@/page/workspace/Settings'
+import Members from '@/page/workspace/Members'
 
 
 export const authenicationRoutePaths=[
@@ -21,7 +22,7 @@ export const protectedRoutePaths=[
     {path:PROTECTED_ROUTES.CREATE,element:<h1>Create your workspace</h1>},
     {path:PROTECTED_ROUTES.WORKSPACE,element:<Dashboard />},
     {path:PROTECTED_ROUTES.TASKS,element:<SignIn />},
-    {path:PROTECTED_ROUTES.MEMBERS,element:<SignIn />},
+    {path:PROTECTED_ROUTES.MEMBERS,element:<Members />},
     {path:PROTECTED_ROUTES.SETTINGS,element:<Settings />},
     {path:PROTECTED_ROUTES.PROJECT_DETAILS,element:<ProjectDetails/>},
 ]

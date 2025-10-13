@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import RecentMembers from "@/components/workspace/member/recent-members"
 import RecentProject from "@/components/workspace/project/recent-project"
 import WorkspaceAnalytics from "@/components/workspace/workspace-analytics"
 import useCreateProjectDialog from "@/hooks/use-create-project-dialog"
@@ -32,7 +33,9 @@ const Dashboard = () => {
             <RecentProject/>
           </TabsContent>
           <TabsContent value="tasks"></TabsContent>
-          <TabsContent value="members"></TabsContent>
+          <TabsContent value="members">
+            <RecentMembers/>
+          </TabsContent>
         </Tabs>
       </div>
     </main>
