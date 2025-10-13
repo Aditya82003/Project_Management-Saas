@@ -9,7 +9,7 @@ export const nameSchema = z.
 export const descriptionSchema = z.
     string()
     .trim()
-    .min(1,{message:"Description is required"});
+    .optional();
 
 export const changeRoleSchema = z.object({
     roleId:z.string().trim().min(1),

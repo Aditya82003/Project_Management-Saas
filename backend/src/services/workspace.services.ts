@@ -131,7 +131,7 @@ export const getWorkspaceAnalyticsService = async (workspaceId: string) => {
     }
 }
 
-export const updateWorkspaceByIdService = async (workspaceId: string, name: string, description: string) => {
+export const updateWorkspaceByIdService = async (workspaceId: string, name: string, description?: string) => {
     const workspace = await prisma.workspace.findUnique({
         where: { id: workspaceId }
     })
