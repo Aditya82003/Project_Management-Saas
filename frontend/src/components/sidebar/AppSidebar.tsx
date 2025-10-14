@@ -46,7 +46,7 @@ const AppSidebar = () => {
             }
           </div>
         </SidebarHeader>
-        <SidebarContent className="!mt-0 dark:bg-background">
+        <SidebarContent className="!mt-0  dark:bg-background">
           <SidebarGroup>
             <SidebarGroupContent>
               <Tooltip>

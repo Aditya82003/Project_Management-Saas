@@ -78,8 +78,8 @@ export const getAllProjectsInWorkspaceController = asyncHandler(async (req: Requ
     const { role } = await getMemberRoleInWorkspaceService(userId, workspaceId)
     roleGuard(role, [PermissionType.VIEW_ONLY])
 
-    const pageSize = parseInt(req.query.page as string) || 10
-    const pageNumber = parseInt(req.query.limit as string) || 1
+    const pageSize = parseInt(req.query.pageSize as string) || 10
+    const pageNumber = parseInt(req.query.pageNumber as string) || 1
 
 
     const { projects,totalCount,totalPages,skip } = await getProjectsInWorkspaceService(workspaceId,pageSize,pageNumber)    

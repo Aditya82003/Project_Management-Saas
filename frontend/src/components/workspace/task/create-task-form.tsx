@@ -43,7 +43,6 @@ const CreateTaskForm = (props: {
 
     const projects = data?.projects || []
     const members = memberData?.members || []
-    console.log(memberData)
 
     const projectOptions = projects.map((project) => {
         return {

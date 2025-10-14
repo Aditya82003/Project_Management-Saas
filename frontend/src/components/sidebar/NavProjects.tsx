@@ -17,6 +17,7 @@ import useConfirmDialog from '@/hooks/use-confirm-dialog'
 import { deleteProjectMutationFn } from '@/lib/api'
 import { toast } from 'sonner'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
+import { cn } from '@/lib/utils'
 
 const NavProjects = () => {
   const navigate = useNavigate()
@@ -42,6 +43,7 @@ const NavProjects = () => {
     pageSize,
     pageNumber
   })
+  console.log(data)
 
   const projects = data?.projects || []
   const pagination = data?.pagination || ({} as Pagination)
@@ -76,7 +78,7 @@ const NavProjects = () => {
   }
   return (
     <>
-      <SidebarGroup className={`${sidebarOpen ? null :"px-0.5"}`} >
+      <SidebarGroup className={`${sidebarOpen ? null : "px-0.5"}`} >
         <SidebarGroupLabel className='w-full justify-between pr-0'>
           <span>Projects</span>
           <PermissionGuard requiredPermission={Permissions.CREATE_PROJECT}>
@@ -88,7 +90,10 @@ const NavProjects = () => {
             </button>
           </PermissionGuard>
         </SidebarGroupLabel>
-        <SidebarMenu className='scrollbar overflow-y-auto pb-2 h-[320px]'>
+        <SidebarMenu className={cn(
+          'pb-2 h-[320px] overflow-x-hidden',
+          sidebarOpen ? 'scrollbar overflow-y-auto' : 'overflow-hidden'
+        )}>
           {isError ? <div>Error occured</div> : null}
           {isPending ? (
             <Loader
@@ -125,44 +130,53 @@ const NavProjects = () => {
             projects.map((project) => {
               const projectUrl = `/workspace/${workspaceId}/project/${project.id}`
               return (
-                <SidebarMenuItem key={project.id}>
-                  <SidebarMenuButton asChild isActive={projectUrl === pathname}>
-                    <Link to={projectUrl}>{project.emoji}<span>{project.name}</span></Link>
-                  </SidebarMenuButton>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <SidebarMenuAction>
-                        <MoreHorizontal />
-                        <span className='sr-only'>More</span>
-                      </SidebarMenuAction>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      className="w-48 rounded-lg"
-                      side={isMobile ? "bottom" : "right"}
-                      align={isMobile ? "end" : "start"}
-                    >
-                      <DropdownMenuItem
-                        onClick={() => navigate(`${projectUrl}`)}
-                      >
-                        <Folder className="text-muted-foreground" />
-                        <span>View Project</span>
-                      </DropdownMenuItem>
-
-                      <PermissionGuard
-                        requiredPermission={Permissions.DELETE_PROJECT}
-                      >
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          disabled={isLoading}
-                          onClick={() => onOpenDialog(project)}
+                <Tooltip key={project.id}>
+                  <TooltipTrigger asChild>
+                    <SidebarMenuItem key={project.id}>
+                      <SidebarMenuButton asChild isActive={projectUrl === pathname}>
+                        <Link to={projectUrl}
+                          className={cn(
+                            'flex items-center overflow-hidden transition-all duration-200 text-sm',
+                            sidebarOpen ? 'justify-start gap-2 pl-1' : 'justify-center'
+                          )}>{project.emoji}<span>{project.name}</span></Link>
+                      </SidebarMenuButton>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <SidebarMenuAction>
+                            <MoreHorizontal />
+                            <span className='sr-only'>More</span>
+                          </SidebarMenuAction>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                          className="w-48 rounded-lg"
+                          side={isMobile ? "bottom" : "right"}
+                          align={isMobile ? "end" : "start"}
                         >
-                          <Trash2 className="text-muted-foreground" />
-                          <span>Delete Project</span>
-                        </DropdownMenuItem>
-                      </PermissionGuard>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </SidebarMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => navigate(`${projectUrl}`)}
+                          >
+                            <Folder className="text-muted-foreground" />
+                            <span>View Project</span>
+                          </DropdownMenuItem>
+
+                          <PermissionGuard
+                            requiredPermission={Permissions.DELETE_PROJECT}
+                          >
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                              disabled={isLoading}
+                              onClick={() => onOpenDialog(project)}
+                            >
+                              <Trash2 className="text-muted-foreground" />
+                              <span>Delete Project</span>
+                            </DropdownMenuItem>
+                          </PermissionGuard>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </SidebarMenuItem>
+                  </TooltipTrigger>
+                  <TooltipContent>{project.name}</TooltipContent>
+                </Tooltip>
               )
             })
           )}
