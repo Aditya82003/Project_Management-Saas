@@ -16,6 +16,7 @@ import { ConfirmDialog } from '../resuable/confirm-dialog'
 import useConfirmDialog from '@/hooks/use-confirm-dialog'
 import { deleteProjectMutationFn } from '@/lib/api'
 import { toast } from 'sonner'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 
 const NavProjects = () => {
   const navigate = useNavigate()
@@ -25,7 +26,7 @@ const NavProjects = () => {
   const queryClient = useQueryClient()
   const workspaceId = useWorkspaceId()
 
-  const { isMobile } = useSidebar()
+  const { isMobile, open: sidebarOpen } = useSidebar()
   const { onOpen } = useCreateProjectDialog()
   const { open, context, onOpenDialog, onCloseDialog } = useConfirmDialog()
 
@@ -57,25 +58,25 @@ const NavProjects = () => {
       workspaceId,
       projectId: context?.id
     },
-    {
-      onSuccess:(_data)=>{
-        queryClient.invalidateQueries({
-          queryKey:["allProjects",workspaceId]
-        });
-        toast.success("Project deleted successfully")
-        navigate(`/workspace/${workspaceId}`)
-        setTimeout(() => onCloseDialog(), 500);
+      {
+        onSuccess: (_data) => {
+          queryClient.invalidateQueries({
+            queryKey: ["allProjects", workspaceId]
+          });
+          toast.success("Project deleted successfully")
+          navigate(`/workspace/${workspaceId}`)
+          setTimeout(() => onCloseDialog(), 500);
+        },
+        onError: (error) => {
+          console.log(error)
+          toast.error(error.message)
+        }
       },
-      onError:(error)=>{
-        console.log(error)
-        toast.error(error.message)
-      }
-    },
     )
   }
   return (
     <>
-      <SidebarGroup >
+      <SidebarGroup className={`${sidebarOpen ? null :"px-0.5"}`} >
         <SidebarGroupLabel className='w-full justify-between pr-0'>
           <span>Projects</span>
           <PermissionGuard requiredPermission={Permissions.CREATE_PROJECT}>
@@ -96,7 +97,7 @@ const NavProjects = () => {
           ) : null}
 
           {!isPending && projects.length === 0 ? (
-            <div className='pl-3'>
+            sidebarOpen ? (<div className='pl-3'>
               <p className='text-xs text-muted-foreground'>There is no project in this workspace yet.Project you  create will show up here</p>
               <PermissionGuard requiredPermission={Permissions.DELETE_PROJECT}>
                 <Button
@@ -109,13 +110,22 @@ const NavProjects = () => {
                   <ArrowRight />
                 </Button>
               </PermissionGuard>
-            </div>
+            </div>) : (
+              <PermissionGuard requiredPermission={Permissions.CREATE_PROJECT}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant={"link"} className='w-5 h-5' type='button' onClick={onOpen}><Plus /></Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Create a project</TooltipContent>
+                </Tooltip>
+              </PermissionGuard>
+            )
 
           ) : (
             projects.map((project) => {
               const projectUrl = `/workspace/${workspaceId}/project/${project.id}`
               return (
-                <SidebarMenuItem  key={project.id}>
+                <SidebarMenuItem key={project.id}>
                   <SidebarMenuButton asChild isActive={projectUrl === pathname}>
                     <Link to={projectUrl}>{project.emoji}<span>{project.name}</span></Link>
                   </SidebarMenuButton>
@@ -143,8 +153,8 @@ const NavProjects = () => {
                       >
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                        disabled={isLoading}
-                        onClick={() => onOpenDialog(project)}
+                          disabled={isLoading}
+                          onClick={() => onOpenDialog(project)}
                         >
                           <Trash2 className="text-muted-foreground" />
                           <span>Delete Project</span>
