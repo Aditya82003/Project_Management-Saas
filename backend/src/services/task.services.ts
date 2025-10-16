@@ -129,7 +129,7 @@ export const getAllTasksService = async (
         projectId?: string,
         status?: string[],
         priority?: string[],
-        assignedto?: string[],
+        assignedTo?: string[],
         dueDate?: string,
         keyword?: string
     },
@@ -152,8 +152,8 @@ export const getAllTasksService = async (
     if (filter.priority) {
         where.priority = { in: filter.priority }
     }
-    if (filter.assignedto) {
-        where.assignedToId = { in: filter.assignedto }
+    if (filter.assignedTo) {
+        where.assignedToId = { in: filter.assignedTo }
     }
     if (filter.dueDate) {
         where.dueDate = new Date(filter.dueDate)
@@ -167,7 +167,7 @@ export const getAllTasksService = async (
     const { pageNumber, pageSize } = pagination
     const skip = (pageNumber - 1) * pageSize
 
-    const [tasks, totalcount] = await prisma.$transaction([
+    const [tasks, totalCount] = await prisma.$transaction([
         prisma.task.findMany({
             where,
             skip,
@@ -177,6 +177,7 @@ export const getAllTasksService = async (
                     select:{
                         id: true,
                         name: true,
+                        emoji: true
                     }
                 },
                 assignedTo: {
@@ -192,14 +193,14 @@ export const getAllTasksService = async (
             where
         })
     ])
-    const totalPage = Math.ceil(totalcount / pageSize)
+    const totalPage = Math.ceil(totalCount / pageSize)
 
     return {
         tasks,
         pagination:{
             pageSize,
             pageNumber,
-            totalcount,
+            totalCount,
             totalPage,
             skip
         }

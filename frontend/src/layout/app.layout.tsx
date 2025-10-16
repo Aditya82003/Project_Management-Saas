@@ -11,11 +11,11 @@ const AppLayout = () => {
         <AuthProvider>
             <SidebarProvider>
                 <AppSidebar />
-                <SidebarInset>
+                <SidebarInset className="overflow-x-hidden">
                     <div className="w-full">
                         <>
                             <Header/>
-                            <div className="px-3 lg:px-20 py-3">
+                            <div className="px-3 lg:px-20 py-3 overflow-x-auto">
                                 <Outlet />
                             </div>
                         </>

@@ -43,7 +43,6 @@ const NavProjects = () => {
     pageSize,
     pageNumber
   })
-  console.log(data)
 
   const projects = data?.projects || []
   const pagination = data?.pagination || ({} as Pagination)

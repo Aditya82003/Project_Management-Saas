@@ -110,14 +110,14 @@ export type AllMembersInWorskpaceResponseType = {
         }
         joinedAt: Date
     }[]
-    roles:RoleType[]
+    roles: RoleType[]
 }
 
 export type ChangeMemberRoleInWorkspacePayloadType = {
     workspaceId: string
-    data:{
-        roleId:string,
-        memberId:string
+    data: {
+        roleId: string,
+        memberId: string
     }
 }
 
@@ -238,17 +238,31 @@ export type TaskType = {
     assignedTo: {
         id: string
         name: string
-        profilePicture: string
-    }
-    createdBy: {
-        id: string
-        name: string
-        profilePicture: string
-    }
+        profilePicture: string | null
+    } | null
+    createdById:string
     dueDate: Date
     taskCode: string
     paid?: boolean
     credit?: number
     createdAt: Date
     updatedAt: Date
+}
+
+export type AllTaskPayloadType = {
+    workspaceId: string
+    projectId?: string  | null
+    keyword?: string | null
+    priority?: TaskPriorityEnumType | null
+    status?: TaskStatusEnumType | null
+    assignedTo?: string | null
+    dueDate?: string | null
+    pageNumber?: number
+    pageSize?: number
+}
+
+export type AllTaskResponseType = {
+    message: string
+    tasks: TaskType[]
+    pagination: Pagination
 }

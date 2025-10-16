@@ -87,7 +87,7 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div className="w-full space-y-2">
+        <div className="w-full space-y-2 ">
             <div className="block w-full lg:flex lg:items-center lg:justify-between">
                 {filtersToolbar && <div className="flex-1"> {filtersToolbar}</div>}
                 <DropdownMenu>
@@ -121,7 +121,7 @@ export function DataTable<TData, TValue>({
                 {isLoading ? (
                     <TableSkeleton columns={6} rows={10} />
                 ) : (
-                    <Table>
+                    <Table className="min-w-full">
                         <TableHeader>
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
@@ -169,6 +169,7 @@ export function DataTable<TData, TValue>({
                             )}
                         </TableBody>
                     </Table>
+
                 )}
             </div>
             <DataTablePagination

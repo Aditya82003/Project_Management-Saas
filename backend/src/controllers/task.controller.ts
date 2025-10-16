@@ -92,16 +92,16 @@ export const getAllTasksController = asyncHandler(async (req: Request, res: Resp
         throw new UnauthorizedException("Unauthorized PLease login")
     }
     const filter = {
-        projectId: req.query.projectId as string || undefined,
-        status: (req.query.status as string).split(',') || undefined,
-        priority: (req.query.priority as string).split(',') || undefined,
-        assignedto: (req.query.assignedto as string).split(',') || undefined,
-        dueDate: req.query.dueDate as string || undefined,
-        keyword: req.query.keyword as string || undefined,
+        projectId: req.query.projectId ? String(req.query.projectId) : undefined,
+        status: req.query.status ? String(req.query.status).split(',') : undefined,
+        priority: req.query.priority ? String(req.query.priority).split(',') : undefined,
+        assignedTo: req.query.assignedTo ? String(req.query.assignedTo).split(',') : undefined,
+        dueDate: req.query.dueDate ? String(req.query.dueDate) : undefined,
+        keyword: req.query.keyword ? String(req.query.keyword) : undefined,
     }
     const pagination = {
-        pageSize: parseInt(req.query.page as string) || 10,
-        pageNumber: parseInt(req.query.limit as string) || 1
+        pageSize: parseInt(req.query.pageSize as string) || 10,
+        pageNumber: parseInt(req.query.pageNumber as string) || 1
     }
     const { role } = await getMemberRoleInWorkspaceService(userId, workspaceId)
     roleGuard(role, [PermissionType.VIEW_ONLY])

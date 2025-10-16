@@ -38,3 +38,8 @@ export const  transformOptions=(option:string[],iconMap?:Record<string,React.Com
 export const transformStatusEnum =(status:string)=>{
     return status.replace(/_/g, " ")
 }
+
+export const formatStatusToEnum = (status: string): string => {
+  return status.toUpperCase().replace(/\s+/g, "_");
+};
+

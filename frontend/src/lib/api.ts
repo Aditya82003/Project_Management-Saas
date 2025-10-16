@@ -1,4 +1,4 @@
-import type { AllMembersInWorskpaceResponseType, AllProjectPayloadType, AllProjectResponseType, AllWorkspaceResponseType, AnalyticsResponseType, ChangeMemberRoleInWorkspacePayloadType, CreateProjectPayloadType, CreateTaskPayloadType, CreateWorkpsaceType, CreateWorkspaceResponseType, CurrentUserResponseType, DeleteWorkspaceResponseType, EditProjectPayloadType, EditWorkspaceType, LoginResponseType, LoginType, ProjectByIdPayloadType, ProjectResponseType, RegisterType, UserType, WorkspaceByIdResponseType } from "@/types/api.types";
+import type { AllMembersInWorskpaceResponseType, AllProjectPayloadType, AllProjectResponseType, AllTaskPayloadType, AllTaskResponseType, AllWorkspaceResponseType, AnalyticsResponseType, ChangeMemberRoleInWorkspacePayloadType, CreateProjectPayloadType, CreateTaskPayloadType, CreateWorkpsaceType, CreateWorkspaceResponseType, CurrentUserResponseType, DeleteWorkspaceResponseType, EditProjectPayloadType, EditWorkspaceType, LoginResponseType, LoginType, ProjectByIdPayloadType, ProjectResponseType, RegisterType, UserType, WorkspaceByIdResponseType } from "@/types/api.types";
 import API from "./axios-client";
 
 export const loginMutationFn = async (data: LoginType): Promise<LoginResponseType> => {
@@ -27,7 +27,7 @@ export const createWorkspaceMutationFn = async (data: CreateWorkpsaceType): Prom
     return response.data
 }
 
-export const editWorkspaceMutationFn = async ({workspaceId,data}:EditWorkspaceType): Promise<CreateWorkspaceResponseType> => {
+export const editWorkspaceMutationFn = async ({ workspaceId, data }: EditWorkspaceType): Promise<CreateWorkspaceResponseType> => {
     const response = await API.put(`/workspace/update/${workspaceId}`, data)
     return response.data
 }
@@ -48,14 +48,13 @@ export const getWorkspaceByIdQueryFn = async (workspaceId: string): Promise<Work
 }
 
 
-export const getMembersInWorkspaceQueryFn = async (workspaceId: string):Promise<AllMembersInWorskpaceResponseType> => {
+export const getMembersInWorkspaceQueryFn = async (workspaceId: string): Promise<AllMembersInWorskpaceResponseType> => {
     const response = await API.get(`/workspace/members/${workspaceId}`)
-    console.log(response)
     return response.data
 }
 
-export const changeWorkspaceMemberRoleMutationFn = async ({workspaceId,data}:ChangeMemberRoleInWorkspacePayloadType)=> {
-    const response = await API.put(`/workspace/change/member/role/${workspaceId}`,data)
+export const changeWorkspaceMemberRoleMutationFn = async ({ workspaceId, data }: ChangeMemberRoleInWorkspacePayloadType) => {
+    const response = await API.put(`/workspace/change/member/role/${workspaceId}`, data)
     return response.data
 }
 
@@ -122,3 +121,46 @@ export const createTaskMutationFn = async ({ workspaceId, projectId, data }: Cre
     const response = await API.post(`/task/project/${projectId}/workspace/${workspaceId}/create`, data)
     return response.data
 }
+
+export const getAllTasksQueryFn = async ({
+    workspaceId,
+    keyword,
+    projectId,
+    assignedTo,
+    priority,
+    status,
+    dueDate,
+    pageNumber,
+    pageSize
+}: AllTaskPayloadType): Promise<AllTaskResponseType> => {
+    const baseUrl = `/task/workspace/${workspaceId}/all`;
+
+    const queryParams = new URLSearchParams();
+    if (keyword) queryParams.set("keyword", keyword);
+    if (projectId) queryParams.set("projectId", projectId);
+    if (assignedTo) queryParams.set("assignedTo", assignedTo);
+    if (priority) queryParams.set("priority", priority);
+    if (status) queryParams.set("status", status);
+    if (dueDate) queryParams.set("dueDate", dueDate);
+    if (pageNumber) queryParams.set("pageNumber", String(pageNumber));
+    if (pageSize) queryParams.set("pageSize", String(pageSize));
+    console.log(queryParams)
+    const url = queryParams.toString() ? `${baseUrl}?${queryParams}` : baseUrl
+    const response = await API.get(url)
+    return response.data
+}
+
+export const deleteTaskMutationFn = async ({
+    workspaceId,
+    taskId,
+}: {
+    workspaceId: string;
+    taskId: string;
+}): Promise<{
+    message: string;
+}> => {
+    const response = await API.delete(
+        `task/${taskId}/workspace/${workspaceId}/delete`
+    );
+    return response.data;
+};
