@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import RecentMembers from "@/components/workspace/member/recent-members"
 import RecentProject from "@/components/workspace/project/recent-project"
+import RecentTasks from "@/components/workspace/task/recent-task"
 import WorkspaceAnalytics from "@/components/workspace/workspace-analytics"
 import useCreateProjectDialog from "@/hooks/use-create-project-dialog"
 import { TabsContent } from "@radix-ui/react-tabs"
@@ -32,7 +33,9 @@ const Dashboard = () => {
           <TabsContent value="projects">
             <RecentProject/>
           </TabsContent>
-          <TabsContent value="tasks"></TabsContent>
+          <TabsContent value="tasks">
+            <RecentTasks/>
+          </TabsContent>
           <TabsContent value="members">
             <RecentMembers/>
           </TabsContent>

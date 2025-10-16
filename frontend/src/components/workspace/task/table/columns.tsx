@@ -9,6 +9,8 @@ import { AvatarFallback } from "@/components/ui/avatar"
 import { format } from "date-fns"
 import { priorities, statuses } from "./data"
 import { TaskPriorityEnum, TaskStatusEnum, type TaskPriorityEnumType, type TaskStatusEnumType } from "@/constant"
+import { DataTableRowActions } from "./table-row-actions"
+
 
 
 export const getColums = (projectId?: string): ColumnDef<TaskType>[] => {
@@ -69,123 +71,132 @@ export const getColums = (projectId?: string): ColumnDef<TaskType>[] => {
                     )
                 }
             },
-            {
-                accessorKey: "assignedTo",
-                header: ({ column }: { column: Column<TaskType, unknown> }) => (
-                    <DataTableColumnHeader column={column} title="Assigned To" />
-                ),
-                cell: ({ row }: { row: Row<TaskType> }) => {
-                    const assignee = row.original.assignedTo || null;
-                    const name = assignee?.name || "";
+        ]),
+        {
+            accessorKey: "assignedTo",
+            header: ({ column }: { column: Column<TaskType, unknown> }) => (
+                <DataTableColumnHeader column={column} title="Assigned To" />
+            ),
+            cell: ({ row }: { row: Row<TaskType> }) => {
+                const assignee = row.original.assignedTo || null;
+                const name = assignee?.name || "";
 
-                    const initials = getAvatarFallbackText(name);
-                    const avatarColor = getAvatarColor(name);
+                const initials = getAvatarFallbackText(name);
+                const avatarColor = getAvatarColor(name);
 
-                    return (
-                        name && (
-                            <div className="flex items-center justify-center gap-1">
-                                <Avatar className="h-6 w-6  rounded-full overflow-hidden ">
-                                    <AvatarImage src={assignee?.profilePicture || ""} alt={name} />
-                                    <AvatarFallback className={avatarColor}>
-                                        {initials}
-                                    </AvatarFallback>
-                                </Avatar>
-                                <span className="block text-ellipsis w-[100px] truncate">
-                                    {assignee?.name}
-                                </span>
-                            </div>
-                        )
-                    )
-                }
-            },
-            {
-                accessorKey: "dueDate",
-                header: ({ column }: { column: Column<TaskType, unknown> }) => (
-                    <DataTableColumnHeader column={column} title="Due Date" />
-                ),
-                cell: ({ row }: { row: Row<TaskType> }) => {
-                    return (
-                        <span className="text-sm lg:max-w-[100px]">
-                            {row.original.dueDate ? format(row.original.dueDate, "PPP") : null}
-                        </span>
-                    )
-                }
-            },
-            {
-                accessorKey: "status",
-                header: ({ column }: { column: Column<TaskType, unknown> }) => (
-                    <DataTableColumnHeader column={column} title="Status" />
-                ),
-                cell: ({ row }: { row: Row<TaskType> }) => {
-                    const status = statuses.find(
-                        (status) => status.value === row.getValue("status")
-                    );
-                    if (!status) {
-                        return null;
-                    }
-
-                    const statusKey = formatStatusToEnum(
-                        status.value
-                    ) as TaskStatusEnumType
-                    const Icon = status.iconMap
-
-                    if (!Icon) {
-                        return null;
-                    }
-
-                    return (
-                        <div className="flex lg:w-[120px] items-center justify-center">
-                            <Badge
-                                variant={TaskStatusEnum[statusKey]}
-                                className="flex w-auto p-1 px-2 gap-1 font-medium shadow-sm uppercase border-0"
-                            >
-                                <Icon className="h-4 w-4 rounded-full text-inherit" />
-                                <span>{status.label}</span>
-                            </Badge>
+                return (
+                    name && (
+                        <div className="flex items-center justify-center gap-1">
+                            <Avatar className="h-6 w-6  rounded-full overflow-hidden ">
+                                <AvatarImage src={assignee?.profilePicture || ""} alt={name} />
+                                <AvatarFallback className={avatarColor}>
+                                    {initials}
+                                </AvatarFallback>
+                            </Avatar>
+                            <span className="block text-ellipsis w-[100px] truncate">
+                                {assignee?.name}
+                            </span>
                         </div>
-                    );
+                    )
+                )
+            }
+        },
+        {
+            accessorKey: "dueDate",
+            header: ({ column }: { column: Column<TaskType, unknown> }) => (
+                <DataTableColumnHeader column={column} title="Due Date" />
+            ),
+            cell: ({ row }: { row: Row<TaskType> }) => {
+                return (
+                    <span className="text-sm lg:max-w-[100px]">
+                        {row.original.dueDate ? format(row.original.dueDate, "PPP") : null}
+                    </span>
+                )
+            }
+        },
+        {
+            accessorKey: "status",
+            header: ({ column }: { column: Column<TaskType, unknown> }) => (
+                <DataTableColumnHeader column={column} title="Status" />
+            ),
+            cell: ({ row }: { row: Row<TaskType> }) => {
+                const status = statuses.find(
+                    (status) => status.value === row.getValue("status")
+                );
+                if (!status) {
+                    return null;
                 }
+
+                const statusKey = formatStatusToEnum(
+                    status.value
+                ) as TaskStatusEnumType
+                const Icon = status.iconMap
+
+                if (!Icon) {
+                    return null;
+                }
+
+                return (
+                    <div className="flex lg:w-[120px] items-center justify-center">
+                        <Badge
+                            variant={TaskStatusEnum[statusKey]}
+                            className="flex w-auto p-1 px-2 gap-1 font-medium shadow-sm uppercase border-0"
+                        >
+                            <Icon className="h-4 w-4 rounded-full text-inherit" />
+                            <span>{status.label}</span>
+                        </Badge>
+                    </div>
+                );
+            }
+        },
+        {
+            accessorKey: "priority",
+            header: ({ column }: { column: Column<TaskType, unknown> }) => (
+                <DataTableColumnHeader column={column} title="Priority" />
+            ),
+            cell: ({ row }: { row: Row<TaskType> }) => {
+                const priority = priorities.find(
+                    (priority) => priority.value === row.getValue("priority")
+                );
+
+                if (!priority) {
+                    return null;
+                }
+
+                const statusKey = formatStatusToEnum(
+                    priority.value
+                ) as TaskPriorityEnumType;
+                const Icon = priority.iconMap;
+
+                if (!Icon) {
+                    return null;
+                }
+
+                return (
+                    <div className="flex items-center justify-center">
+                        <Badge
+                            variant={TaskPriorityEnum[statusKey]}
+                            className="flex lg:w-[110px] p-1 gap-1  font-medium !shadow-none uppercase border-0"
+                        >
+                            <Icon className="h-4 w-4 rounded-full text-inherit" />
+                            <span>{priority.label}</span>
+                        </Badge>
+                    </div>
+                );
             },
-             {
-      accessorKey: "priority",
-      header: ({ column }:{column: Column<TaskType, unknown>}) => (
-        <DataTableColumnHeader column={column} title="Priority" />
-      ),
-      cell: ({ row }:{row: Row<TaskType>}) => {
-        const priority = priorities.find(
-          (priority) => priority.value === row.getValue("priority")
-        );
-
-        if (!priority) {
-          return null;
+        },
+        {
+            id:"actions",
+            cell:({row})=>{
+                return(
+                    <>
+                    <DataTableRowActions row={row} />
+                    </>
+                )
+            }
         }
-
-        const statusKey = formatStatusToEnum(
-          priority.value
-        ) as TaskPriorityEnumType;
-        const Icon = priority.iconMap;
-
-        if (!Icon) {
-          return null;
-        }
-
-        return (
-          <div className="flex items-center justify-center">
-            <Badge
-              variant={TaskPriorityEnum[statusKey]}
-              className="flex lg:w-[110px] p-1 gap-1  font-medium !shadow-none uppercase border-0"
-            >
-              <Icon className="h-4 w-4 rounded-full text-inherit" />
-              <span>{priority.label}</span>
-            </Badge>
-          </div>
-        );
-      },
-    },
-           
-        ])
     ]
 
-    return columns
+return columns
 
 }

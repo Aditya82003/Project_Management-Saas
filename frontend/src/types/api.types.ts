@@ -131,8 +131,8 @@ export type AnalyticsResponseType = {
     message: string
     analytics: {
         totalTasks: number,
-        overdueTasks: number,
-        completedTasks: number
+        overdueTask: number,
+        completedTask: number
     }
 }
 
@@ -240,7 +240,7 @@ export type TaskType = {
         name: string
         profilePicture: string | null
     } | null
-    createdById:string
+    createdById: string
     dueDate: Date
     taskCode: string
     paid?: boolean
@@ -249,9 +249,23 @@ export type TaskType = {
     updatedAt: Date
 }
 
+export type EditTaskPayloadType = {
+    taskId: string
+    projectId: string
+    workspaceId: string
+    data: Partial<{
+        title: string;
+        description: string;
+        priority: TaskPriorityEnumType;
+        status: TaskStatusEnumType;
+        assignedTo: string;
+        dueDate: string
+    }>
+}
+
 export type AllTaskPayloadType = {
     workspaceId: string
-    projectId?: string  | null
+    projectId?: string | null
     keyword?: string | null
     priority?: TaskPriorityEnumType | null
     status?: TaskStatusEnumType | null

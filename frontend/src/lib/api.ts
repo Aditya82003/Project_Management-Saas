@@ -1,4 +1,4 @@
-import type { AllMembersInWorskpaceResponseType, AllProjectPayloadType, AllProjectResponseType, AllTaskPayloadType, AllTaskResponseType, AllWorkspaceResponseType, AnalyticsResponseType, ChangeMemberRoleInWorkspacePayloadType, CreateProjectPayloadType, CreateTaskPayloadType, CreateWorkpsaceType, CreateWorkspaceResponseType, CurrentUserResponseType, DeleteWorkspaceResponseType, EditProjectPayloadType, EditWorkspaceType, LoginResponseType, LoginType, ProjectByIdPayloadType, ProjectResponseType, RegisterType, UserType, WorkspaceByIdResponseType } from "@/types/api.types";
+import type { AllMembersInWorskpaceResponseType, AllProjectPayloadType, AllProjectResponseType, AllTaskPayloadType, AllTaskResponseType, AllWorkspaceResponseType, AnalyticsResponseType, ChangeMemberRoleInWorkspacePayloadType, CreateProjectPayloadType, CreateTaskPayloadType, CreateWorkpsaceType, CreateWorkspaceResponseType, CurrentUserResponseType, DeleteWorkspaceResponseType, EditProjectPayloadType, EditTaskPayloadType, EditWorkspaceType, LoginResponseType, LoginType, ProjectByIdPayloadType, ProjectResponseType, RegisterType, UserType, WorkspaceByIdResponseType } from "@/types/api.types";
 import API from "./axios-client";
 
 export const loginMutationFn = async (data: LoginType): Promise<LoginResponseType> => {
@@ -122,6 +122,11 @@ export const createTaskMutationFn = async ({ workspaceId, projectId, data }: Cre
     return response.data
 }
 
+export const editTaskMutationFn = async ({ taskId, workspaceId, projectId, data }: EditTaskPayloadType):Promise<{message:string}> => {
+    const response = await API.put(`/task/${taskId}/project/${projectId}/workspace/${workspaceId}/update`, data)
+    return response.data
+}
+
 export const getAllTasksQueryFn = async ({
     workspaceId,
     keyword,
@@ -144,7 +149,7 @@ export const getAllTasksQueryFn = async ({
     if (dueDate) queryParams.set("dueDate", dueDate);
     if (pageNumber) queryParams.set("pageNumber", String(pageNumber));
     if (pageSize) queryParams.set("pageSize", String(pageSize));
-    console.log(queryParams)
+
     const url = queryParams.toString() ? `${baseUrl}?${queryParams}` : baseUrl
     const response = await API.get(url)
     return response.data

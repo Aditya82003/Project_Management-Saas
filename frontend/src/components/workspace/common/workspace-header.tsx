@@ -4,7 +4,7 @@ import { Loader } from "lucide-react"
 
 const WorkspaceHeader = () => {
     const { workspace, workspaceLoading } = useAuthContext()
-    console.log(workspace, workspaceLoading)
+
     return (
         <div className="w-full max-w-3xl mx-auto pb-2">
             {workspaceLoading ? (

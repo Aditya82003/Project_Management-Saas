@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import useCreateProjectDialog from "@/hooks/use-create-project-dialog"
 import CreateProjectForm from "./create-project-form"
 
@@ -8,6 +8,7 @@ const CreateProjectDialog = () => {
         <div>
             <Dialog modal={true} open={open} onOpenChange={onClose}>
                 <DialogContent className="sm:max-w-lg border-0">
+                    <DialogTitle className="sr-only">Create Project</DialogTitle>
                     <CreateProjectForm {...{ onClose }} />
                 </DialogContent>
             </Dialog>

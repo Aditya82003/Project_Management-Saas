@@ -35,10 +35,8 @@ const TaskTable = () => {
     const [pageNumber, setPageNumber] = useState(1)
     const [pageSize, setPageSize] = useState(10)
 
-    // const [taskList, setTaskList] = useState()
     const workspaceId = useWorkspaceId()
     const columns = getColums()
-
     const [filters, setFilters] = useTaskTableFilter()
 
     const { data, isLoading} = useQuery({
@@ -55,8 +53,6 @@ const TaskTable = () => {
         }),
         staleTime: 0
     })
-
-    console.log(data?.tasks)
 
     const tasks: TaskType[] = data?.tasks || []
     const totalCount = data?.pagination.totalCount || 0
