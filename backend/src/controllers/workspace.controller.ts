@@ -65,6 +65,7 @@ export const changeWorkspaceMemberRoleController = asyncHandler(async (req: Requ
     const workspaceId = workspaceIdSchema.parse(req.params.id)
     const { roleId, memberId } = req.body
     const userId = req.user?.id
+    console.log(req.body)
     if (!userId) {
         throw new UnauthorizedException("Unauthorized PLease login")
     }

@@ -56,7 +56,7 @@ const TaskTable = () => {
 
     const tasks: TaskType[] = data?.tasks || []
     const totalCount = data?.pagination.totalCount || 0
-
+    console.log(tasks)
     const handlePageChange = (page: number) => {
         setPageNumber(page)
     }

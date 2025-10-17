@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Command, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Popover, PopoverContent } from "@/components/ui/popover"
 import { Permissions } from "@/constant"
 import { useAuthContext } from "@/context/auth-provider"
@@ -31,6 +31,7 @@ const Allmembers = () => {
     })
 
     const handleSelect = (roleId: string, memberId: string) => {
+        console.log(memberId , "Member ID")
         if (!roleId || !memberId) return
         const payload = {
             workspaceId,
@@ -63,7 +64,7 @@ const Allmembers = () => {
                 const initials = getAvatarFallbackText(name)
                 const avatarColor = getAvatarColor(name)
                 return (
-                    <div className="flex items-center justify-between space-x-4">
+                    <div className="flex items-center justify-between space-x-4 space-y-4  ">
                         <div className="flex items-center space-x-4">
                             <Avatar className="h-8 w-8">
                                 <AvatarImage src={member.user.profilePicture || ""} alt={name} />
@@ -96,19 +97,26 @@ const Allmembers = () => {
                                                 className="disabled:pointer-events-none" />
                                             <CommandList>
                                                 {isLoading ? (<Loader className=" w-8 h-8 place-sef-center flex my-4 animate-spin" />) :
-                                                 (
-                                                    roles.map((role)=> role.role !== "OWNER" && (
-                                                        <CommandItem
-                                                        key={role.id}
-                                                        disabled={isLoading}
-                                                        onSelect={()=>handleSelect(role.id,member.user.id)}>
-                                                            <p>{role.role?.toLowerCase()}</p>
-                                                            <p>{role.role === "ADMIN" && `Can view, create, edit tassks, project and manage settings .`}
-                                                                {role.role === "MEMBER" && `Can view, edit only task created by.`}
-                                                            </p>
-                                                        </CommandItem>
-                                                    ))
-                                                 )}
+                                                    (
+                                                        <>
+                                                            <CommandEmpty>No results found.</CommandEmpty>
+                                                            <CommandGroup>
+                                                                {roles.map((role) => role.role !== "OWNER" && (
+                                                                    <CommandItem
+                                                                        key={role.id}
+                                                                        disabled={isLoading}
+                                                                        className="disabled:pointer-events-none gap-1 mb-1  flex flex-col items-start px-4 py-2 cursor-pointer"
+                                                                        onSelect={() => handleSelect(role.id, member.id)}>
+                                                                        <p className="capitalize">{role.role?.toLowerCase()}</p>
+                                                                        <p className="text-sm text-muted-foreground">{role.role === "ADMIN" && `Can view, create, edit tassks, project and manage settings .`}
+                                                                            {role.role === "MEMBER" && `Can view, edit only task created by.`}
+                                                                        </p>
+                                                                    </CommandItem>
+                                                                ))
+                                                                }
+                                                            </CommandGroup>
+                                                        </>
+                                                    )}
                                             </CommandList>
                                         </Command>
                                     </PopoverContent>

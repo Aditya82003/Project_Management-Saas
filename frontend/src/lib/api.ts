@@ -122,7 +122,7 @@ export const createTaskMutationFn = async ({ workspaceId, projectId, data }: Cre
     return response.data
 }
 
-export const editTaskMutationFn = async ({ taskId, workspaceId, projectId, data }: EditTaskPayloadType):Promise<{message:string}> => {
+export const editTaskMutationFn = async ({ taskId, workspaceId, projectId, data }: EditTaskPayloadType): Promise<{ message: string }> => {
     const response = await API.put(`/task/${taskId}/project/${projectId}/workspace/${workspaceId}/update`, data)
     return response.data
 }

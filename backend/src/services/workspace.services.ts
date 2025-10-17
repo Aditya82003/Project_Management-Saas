@@ -156,6 +156,9 @@ export const getAllWorkspacesUserIsMemberService = async (userId: string) => {
 }
 
 export const changeMemberRoleService = async (workspaceId: string, memberId: string, roleId: string) => {
+    console.log(workspaceId,memberId
+        ,roleId
+    )
     const workspace = await prisma.workspace.findUnique({
         where: { id: workspaceId }
     })
@@ -168,7 +171,7 @@ export const changeMemberRoleService = async (workspaceId: string, memberId: str
     if (!role) {
         throw new NotFoundException("Role not found")
     }
-    const member = await prisma.member.findUnique({
+    const member = await prisma.member.findUnique({   // change the condition to  {userId:memberID} bcz i passsing user Id as member id
         where: { id: memberId }
     })
     if (!member) {

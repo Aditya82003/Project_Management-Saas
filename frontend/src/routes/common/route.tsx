@@ -7,6 +7,7 @@ import ProjectDetails from '@/page/workspace/ProjectDetails'
 import Settings from '@/page/workspace/Settings'
 import Members from '@/page/workspace/Members'
 import Tasks from '@/page/workspace/Tasks'
+import InviteUser from '@/page/invite/inviteUser'
 
 
 export const authenicationRoutePaths=[
@@ -16,7 +17,7 @@ export const authenicationRoutePaths=[
 ]
 
 export const baseRoutePaths=[
-    {path:BASE_ROUTES.INVITE_URL,element:<SignIn />}
+    {path:BASE_ROUTES.INVITE_URL,element:<InviteUser />}
 ]
 
 export const protectedRoutePaths=[
