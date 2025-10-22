@@ -153,7 +153,7 @@ export const getProjectAnalyticsService = async (
     }
     const currentDate=new Date()
 
-    const [totalTasks,overdueTasks,completedTasks]=await prisma.$transaction([
+    const [totalTasks,overdueTask,completedTask]=await prisma.$transaction([
         prisma.task.count({
             where:{
                 projectId
@@ -180,8 +180,8 @@ export const getProjectAnalyticsService = async (
 
     const analytics={
         totalTasks,
-        overdueTasks,
-        completedTasks
+        overdueTask,
+        completedTask
     }
 
     return { analytics }

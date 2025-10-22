@@ -31,6 +31,7 @@ const AppSidebar = () => {
 
   const workspaceId = useWorkspaceId()
   const { open } = useSidebar()
+  const {open:sidebarOpen}=useSidebar()
 
   const [isOpen, setIsopen] = useState(false);
 
@@ -49,11 +50,11 @@ const AppSidebar = () => {
         <SidebarContent className="!mt-0  dark:bg-background">
           <SidebarGroup>
             <SidebarGroupContent>
-              <Tooltip>
+              <Tooltip open={sidebarOpen ? false : undefined}>
                 <TooltipTrigger className="w-full">
                   <WorkspaceSwitcher />
                 </TooltipTrigger>
-                <TooltipContent>Workspace</TooltipContent>
+                <TooltipContent side="right">Workspace</TooltipContent>
               </Tooltip>
               <Separator />
               <NavMain />

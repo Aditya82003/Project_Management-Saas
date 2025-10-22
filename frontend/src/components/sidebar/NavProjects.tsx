@@ -120,7 +120,7 @@ const NavProjects = () => {
                   <TooltipTrigger asChild>
                     <Button variant={"link"} className='w-5 h-5' type='button' onClick={onOpen}><Plus /></Button>
                   </TooltipTrigger>
-                  <TooltipContent>Create a project</TooltipContent>
+                  <TooltipContent side='right'>Create a project</TooltipContent>
                 </Tooltip>
               </PermissionGuard>
             )
@@ -129,7 +129,7 @@ const NavProjects = () => {
             projects.map((project) => {
               const projectUrl = `/workspace/${workspaceId}/project/${project.id}`
               return (
-                <Tooltip key={project.id}>
+                <Tooltip key={project.id} open={sidebarOpen ? false : undefined}>
                   <TooltipTrigger asChild>
                     <SidebarMenuItem key={project.id}>
                       <SidebarMenuButton asChild isActive={projectUrl === pathname}>
@@ -174,7 +174,7 @@ const NavProjects = () => {
                       </DropdownMenu>
                     </SidebarMenuItem>
                   </TooltipTrigger>
-                  <TooltipContent>{project.name}</TooltipContent>
+                  <TooltipContent side='right'>{project.name}</TooltipContent>
                 </Tooltip>
               )
             })

@@ -11,6 +11,8 @@ export const PROTECTED_ROUTES = {
     MEMBERS: "/workspace/:workspaceId/members",
     SETTINGS: "/workspace/:workspaceId/settings",
     PROJECT_DETAILS: "/workspace/:workspaceId/project/:projectId",
+    VIDEO_CALL: "/workspace/:workspaceId/video-call",
+    ROOM:"/workspace/:workspaceId/video-call/:roomId"
 }
 
 export const BASE_ROUTES = {

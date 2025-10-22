@@ -1,6 +1,6 @@
 
-import { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
-import { CheckCircle, LayoutDashboard, Settings, Users, type LucideIcon } from 'lucide-react'
+import { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '../ui/sidebar'
+import { CheckCircle, LayoutDashboard, Settings, Users, VideoIcon, type LucideIcon } from 'lucide-react'
 import useWorkspaceId from '@/hooks/use-worksapce-id'
 import { Link } from 'react-router'
 import { useAuthContext } from '@/context/auth-provider'
@@ -16,6 +16,7 @@ const NavMain = () => {
     const { hasPermission } = useAuthContext()
 
     const canManageSettings = hasPermission(Permissions.MANAGE_WORKSPACE_SETTINGS)
+    const {open:sidebarOpen} = useSidebar()
 
     const pathname = location.pathname
     const workspaceId = useWorkspaceId()
@@ -42,13 +43,18 @@ const NavMain = () => {
                 url: `/workspace/${workspaceId}/settings`,
                 icon: Settings,
             },
-        ] : [])
+        ] : []),
+        {
+            title:"Video Call",
+            url:`/workspace/${workspaceId}/video-call`,
+            icon: VideoIcon
+        }
     ]
     return (
         <SidebarGroup className='pl-0'>
             <SidebarMenu>
                 {items.map((item) => (
-                    <Tooltip key={item.title}>
+                    <Tooltip key={item.title} open={sidebarOpen ? false : undefined}>
                         <TooltipTrigger asChild>
                             <SidebarMenuItem key={item.title}>
                                 <SidebarMenuButton isActive={item.url === pathname} asChild>
@@ -59,7 +65,7 @@ const NavMain = () => {
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TooltipTrigger>
-                        <TooltipContent>{item.title}</TooltipContent>
+                        <TooltipContent side='right'>{item.title}</TooltipContent>
                     </Tooltip>
                 ))}
             </SidebarMenu>

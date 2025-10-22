@@ -8,6 +8,8 @@ import Settings from '@/page/workspace/Settings'
 import Members from '@/page/workspace/Members'
 import Tasks from '@/page/workspace/Tasks'
 import InviteUser from '@/page/invite/inviteUser'
+import Videocall from '@/page/workspace/Videocall'
+import Roomjoin from '@/page/workspace/Roomjoin'
 
 
 export const authenicationRoutePaths=[
@@ -27,4 +29,6 @@ export const protectedRoutePaths=[
     {path:PROTECTED_ROUTES.MEMBERS,element:<Members />},
     {path:PROTECTED_ROUTES.SETTINGS,element:<Settings />},
     {path:PROTECTED_ROUTES.PROJECT_DETAILS,element:<ProjectDetails/>},
+    {path:PROTECTED_ROUTES.VIDEO_CALL,element:<Videocall/>},
+    {path:PROTECTED_ROUTES.ROOM,element:<Roomjoin/>},
 ]

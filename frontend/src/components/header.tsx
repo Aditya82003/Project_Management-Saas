@@ -12,6 +12,7 @@ const Header = () => {
         if (pathname.includes("/tasks")) return "Tasks"
         if (pathname.includes("/members")) return "Members"
         if (pathname.includes("/settings")) return "Settings"
+        if (pathname.includes("/video-call")) return "Video Call"
         return null
     }
     const pageHeading = getPageLabel(pathname)
@@ -37,7 +38,7 @@ const Header = () => {
 
                         {pageHeading && (
                             <>
-                                <BreadcrumbSeparator className="hidden md:block"/>
+                                <BreadcrumbSeparator className="hidden md:block" />
                                 <BreadcrumbItem className="text-[15px]">
                                     <BreadcrumbPage className="line-clamp-1">
                                         {pageHeading}

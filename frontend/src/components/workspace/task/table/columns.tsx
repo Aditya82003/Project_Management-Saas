@@ -10,6 +10,7 @@ import { format } from "date-fns"
 import { priorities, statuses } from "./data"
 import { TaskPriorityEnum, TaskStatusEnum, type TaskPriorityEnumType, type TaskStatusEnumType } from "@/constant"
 import { DataTableRowActions } from "./table-row-actions"
+import { CheckCircle, XCircle } from "lucide-react"
 
 
 
@@ -64,7 +65,7 @@ export const getColums = (projectId?: string): ColumnDef<TaskType>[] => {
                     const project = row.original.project
                     if (!project) return null
                     return (
-                        <div className="flex items-center justify-center gap-1 ">
+                        <div className="flex items-center gap-1 ">
                             <span className="rounded-full border">{project.emoji}</span>
                             <span className="block capitalize truncate  w-[90px] text-ellipsis">{project.name}</span>
                         </div>
@@ -86,7 +87,7 @@ export const getColums = (projectId?: string): ColumnDef<TaskType>[] => {
 
                 return (
                     name && (
-                        <div className="flex items-center justify-center gap-1">
+                        <div className="flex items-center gap-1">
                             <Avatar className="h-6 w-6  rounded-full overflow-hidden ">
                                 <AvatarImage src={assignee?.profilePicture || ""} alt={name} />
                                 <AvatarFallback className={avatarColor}>
@@ -137,7 +138,7 @@ export const getColums = (projectId?: string): ColumnDef<TaskType>[] => {
                 }
 
                 return (
-                    <div className="flex lg:w-[120px] items-center justify-center">
+                    <div className="flex lg:w-[120px] items-center">
                         <Badge
                             variant={TaskStatusEnum[statusKey]}
                             className="flex w-auto p-1 px-2 gap-1 font-medium shadow-sm uppercase border-0"
@@ -173,7 +174,7 @@ export const getColums = (projectId?: string): ColumnDef<TaskType>[] => {
                 }
 
                 return (
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center">
                         <Badge
                             variant={TaskPriorityEnum[statusKey]}
                             className="flex lg:w-[110px] p-1 gap-1  font-medium !shadow-none uppercase border-0"
@@ -186,17 +187,32 @@ export const getColums = (projectId?: string): ColumnDef<TaskType>[] => {
             },
         },
         {
-            id:"actions",
-            cell:({row})=>{
-                return(
+            id: "paid",
+            header: ({ column }: { column: Column<TaskType, unknown> }) => (
+                <DataTableColumnHeader column={column} title="Paid" />
+            ),
+            cell: ({ row }: { row: Row<TaskType> }) => {
+                return (
+                    <div className="flex items-center">
+                        <span className="text-sm">
+                            {row.original.paid ? (<CheckCircle className="w-5 h-5" />) : (<XCircle className="w-5 h-5 text-red-500" />)}
+                        </span>
+                    </div>
+                )
+            }
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => {
+                return (
                     <>
-                    <DataTableRowActions row={row} />
+                        <DataTableRowActions row={row} />
                     </>
                 )
             }
         }
     ]
 
-return columns
+    return columns
 
 }

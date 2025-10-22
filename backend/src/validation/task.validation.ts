@@ -2,7 +2,7 @@ import z from "zod";
 import { TaskPriority, TaskStatus } from "../generated/prisma";
 
 export const titleSchema = z.string().trim().min(1).max(255)
-export const descriptionSchema = z.string().trim().min(1).optional()
+export const descriptionSchema = z.string().trim().optional()
 
 export const assignTaskSchema = z.string().trim().min(1).nullable().optional()
 
